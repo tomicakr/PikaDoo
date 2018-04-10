@@ -1,10 +1,14 @@
 import React from 'react';
 import SignupForm from './SignupForm';
 
-export default () => {
-    return (
-        <div className="centered">
-            <SignupForm />
-        </div>
-    );
+class SignupPage extends React.Component {
+    render() {
+        return (
+            <div className="container">
+                <SignupForm/>
+            </div>
+        );
+    }
 }
+
+export default SignupPage;
