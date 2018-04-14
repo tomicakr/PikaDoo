@@ -10,6 +10,10 @@ let app = express();
 
 const compiler = webpack(webpackConfig);
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(webpackMiddleware(compiler, {
     hot: true,
     publicPath: webpackConfig.output.publicPath,
@@ -17,8 +21,9 @@ app.use(webpackMiddleware(compiler, {
 }));
 app.use(webpackHotMiddleware(compiler));
 
+app.use(require('./signup'));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));
-})
+});
 
 app.listen(3000, () => console.log('Running on localhost:3000'));
