@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Redirect from 'react-router';
+import {Redirect} from 'react-router';
 
 class SignupForm extends React.Component {
     constructor(props) {

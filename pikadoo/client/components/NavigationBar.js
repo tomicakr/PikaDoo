@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class NavigationBar extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            sessionUser = ''
+        }
+    }
+
     render() {
         return (
             <nav className="navbar fixed-top navbar-inverse bg-dark">
@@ -10,7 +17,7 @@ class NavigationBar extends React.Component {
                             <a className="navbar-brand" href="#">Pikadoo</a>
                         </div>
                         <ul className="nav navbar-nav">
-                        <li><a href="#"><span className="text-white">Single-player</span></a></li>
+                        <li><a href="#"><span className="text-white">{this.state.sessionUser}</span></a></li>
                         </ul>
                         <ul className="nav navbar-nav">
                             <li><a href="#"><span className="text-white">Multi-player</span></a></li>

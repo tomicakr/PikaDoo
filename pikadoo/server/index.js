@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import path from 'path';
 
 import webpack from 'webpack';
@@ -23,8 +24,12 @@ app.use(webpackMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 
 app.use(require('./signup'));
+app.use(require('./login'));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));
 });
+
+app.use(session());
+app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000 }}));
 
 app.listen(3000, () => console.log('Running on localhost:3000'));
