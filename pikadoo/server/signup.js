@@ -1,69 +1,39 @@
 const express = require('express');
+const bcryptjs = require('bcryptjs');
+const mongojs = require('mongojs');
+
 const router = express.Router();
 router.use(require('express-validator')());
-const bcryptjs = require('bcryptjs');
-const sqlite3 = require('sqlite3').verbose();
 
+var db = mongojs('pikadoo', ['users']);
+db.users.find((err, docs) => {
+    if(err){
+        console.log(err);
+    }
+
+    console.log(docs);
+});
+var arr = [];
+arr.map(key => console.log(key));
 router.post('/signup', (req, res) => {
-    const email = req.body.user.email;
-    const username = req.body.user.username;
-    const pass = req.body.user.password;
-
+    const user = req.body.user;
     req.checkBody('user.email', 'Invalid email').isEmail();
     req.checkBody('user.username', 'Username cannot be empty').notEmpty();
     req.checkBody('user.password', 'Password cannot be empty').notEmpty();
-    req.checkBody('user.passwordC', 'Passwords do not match').equals(pass);
+    req.checkBody('user.passwordC', 'Passwords do not match').equals(user.password);
 
     let errors = req.validationErrors();
-    
+
+    console.log(errors);
     if(errors) {
-        res.send(errors);
+        res.json({errorsExist: true, errors: errors});
         return;
     }
 
-    let db = new sqlite3.Database(':memory:', (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-    });
-
-    let hashPass = '325';
-    bcryptjs.genSalt(12, (err, salt) => {
-        bcryptjs.hash(pass, salt, (error, hash) => {
-            if(error) {
-                return console.error(error.message);
-            }
-
-            hashPass = hash;
-        });
-    });
-
-    //@Matija -- Ovo ne bi trebalo biti tu
-    let checkIfExists = "SELECT name FROM sqlite_master WHERE type='table' AND name='Users';";
-    let exists = false;
-    db.run(checkIfExists, (err, row) => {
-        if (err) {
-            return console.error(err.message);
-        }
-
-        exists = true;
-    });
-
-    if(!exists) {
-        db.run("CREATE TABLE Users(email text, username text, password text)");
-    }
-
-    let sql = 'INSERT INTO Users(email, username, password) VALUES (?, ?, ?)';
-
-    db.run(sql, [email, username, hashPass], (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-    });
-
-    db.close();
-
-    res.redirect("/login");
+    db.users.insert(user);
+    res.status(200).json({
+        errorsExist:false
+    })
 });
 
 
