@@ -4,23 +4,20 @@ router.use(require('express-validator')());
 const bcryptjs = require('bcryptjs');
 const sqlite3 = require('sqlite3').verbose();
 
-router.post('/signup', (req, resp) => {
-    const email = req.body.email;
-    const username = req.body.username;
-    const pass = req.body.password;
+router.post('/signup', (req, res) => {
+    const email = req.body.user.email;
+    const username = req.body.user.username;
+    const pass = req.body.user.password;
 
-    req.checkBody('email', 'Email cannot be empty').notEmpty();
-    req.checkBody('email', 'Invalid email').isEmail();
-    req.checkBody('username', 'Username cannot be empty').notEmpty();
-    req.checkBody('password', 'Password cannot be empty').notEmpty();
-    req.checkBody('passwordC', 'Passwords do not match').equals(pass);
+    req.checkBody('user.email', 'Invalid email').isEmail();
+    req.checkBody('user.username', 'Username cannot be empty').notEmpty();
+    req.checkBody('user.password', 'Password cannot be empty').notEmpty();
+    req.checkBody('user.passwordC', 'Passwords do not match').equals(pass);
 
     let errors = req.validationErrors();
-
+    
     if(errors) {
-        //@Matija -- Kako poslati errors?
-        req.body.errors = errors
-        resp.redirect('/signup');
+        res.send(errors);
         return;
     }
 
@@ -66,7 +63,7 @@ router.post('/signup', (req, resp) => {
 
     db.close();
 
-    resp.redirect("/login");
+    res.redirect("/login");
 });
 
 
