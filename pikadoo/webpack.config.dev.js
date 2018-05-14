@@ -24,7 +24,15 @@ export default {
                 test: /\.js$/,
                 include: path.join(__dirname, 'client'),
                 loaders: ['babel-loader']
-            }
+            },
+			{
+				test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+				use: [
+					{
+						loader: 'url-loader'
+					}
+				]
+			}
         ]
     },
     resolve: {

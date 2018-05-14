@@ -6,8 +6,9 @@ import Favicon from 'react-favicon';
 
 import App from './components/App';
 import Greetings from './components/Greetings';
-import SignupPage from './components/SignupPage'
-import LoginPage from './components/LoginPage'
+import SignupPage from './components/SignupPage';
+import LoginPage from './components/LoginPage';
+import SinglePlayer from './components/SinglePlayer';
 
 render((
   <Router>
@@ -17,6 +18,7 @@ render((
       <Route exact path="/" component={Greetings} />
       <Route exact path="/signup" component={SignupPage} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/singleplayer" component={SinglePlayer} />
     </div>
   </Router>
 ), document.getElementById('app'));

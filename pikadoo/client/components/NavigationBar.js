@@ -5,7 +5,7 @@ class NavigationBar extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            sessionUser = ''
+            sessionUser : ''
         }
     }
 
@@ -19,6 +19,11 @@ class NavigationBar extends React.Component {
                         <ul className="nav navbar-nav">
                         <li><a href="#"><span className="text-white">{this.state.sessionUser}</span></a></li>
                         </ul>
+
+                        <ul className="nav navbar-nav">
+                            <li><a href="/singleplayer"><span className="text-white">Single-player</span></a></li>
+                        </ul>
+
                         <ul className="nav navbar-nav">
                             <li><a href="#"><span className="text-white">Multi-player</span></a></li>
                         </ul>
