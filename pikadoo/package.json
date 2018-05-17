@@ -1,11 +1,10 @@
 {
-  "name": "react-redux-registration-login-example",
+  "name": "pikadoo",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cornflourblue/react-redux-registration-login-example.git"
+    "url": "https://github.com/tomislavKravarscan/PikaDoo"
   },
-  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open"
   },
