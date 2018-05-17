@@ -4,7 +4,8 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedField : null
+            selectedField : null,
+            quantifier : 1
         }
     }
 
@@ -28,7 +29,7 @@ class Board extends React.Component {
         }
 
         if(distanceFromCenterSquared < BullseyeRadius * BullseyeRadius) {
-            this.setState({selectedField : "Bullseye aka Pikadoo"});
+            this.setState({selectedField : 25});
             return;
         }
 
@@ -44,11 +45,20 @@ class Board extends React.Component {
     }
 
     render() {
-        const selected = (this.state.selectedField == null) ? "Nothing selected" : this.state.selectedField;
+        const selected = (this.state.selectedField == null) ? "Nothing selected" : this.state.selectedField * this.state.quantifier;
         return (
-            <div>
+            <div className='container-fluid'>
                 <img src={require('../../res/papikado.png')} onClick={this.onClick.bind(this)} />
+                <br />
+                <div className="btn-group">
+                  <button type="button" className="btn btn-default active" onClick={() => this.setState({quantifier : 1})}>Single</button>
+                  <button type="button" className="btn btn-default" onClick={() => this.setState({quantifier : 2})}>Double</button>
+                  <button type="button" className="btn btn-default" onClick={() => this.setState({quantifier : 3})}
+                    disabled={this.state.selectedField == 25}>Triple</button>
+                </div>
                 <p>{selected}</p>
+                <button type="button" className="btn btn-primary" onClick={() => this.props.onSelectPoints({points : selected, quantifier : this.state.quantifier})}
+                    disabled={isNaN(parseFloat(selected))}> Select </button>
             </div>
         );
     }
