@@ -24,11 +24,14 @@ class Board extends React.Component {
         const distanceFromCenterSquared = xFromCenter * xFromCenter + yFromCenter * yFromCenter;
 
         if(distanceFromCenterSquared > PapikadoRadius * PapikadoRadius) {
-            this.setState({selectedField : null});
+            this.setState({selectedField : 0});
             return;
         }
 
         if(distanceFromCenterSquared < BullseyeRadius * BullseyeRadius) {
+            if(this.state.quantifier == 3) {
+                this.state.quantifier = 1;
+            }
             this.setState({selectedField : 25});
             return;
         }

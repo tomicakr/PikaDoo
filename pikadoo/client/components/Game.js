@@ -1,5 +1,7 @@
 import React from 'react';
 import Board from './Board';
+import DisplayResults from './DisplayResults';
+import axios from 'axios';
 
 class Game extends React.Component {
     constructor(props) {
@@ -9,8 +11,8 @@ class Game extends React.Component {
             case "501":
                 myScore = 501;
                 break;
-            case "601":
-                myScore = 601;
+            case "301":
+                myScore = 301;
                 break;
             case "701":
                 myScore = 701;
@@ -23,11 +25,12 @@ class Game extends React.Component {
             doubleOut : props.doubleOut,
             score : myScore,
             win : false,
-            rounds : []
+            shots : []
         }
     }
 
     handleSelectedPoints(input) {
+        this.state.shots.push(input);
         const nextScore = this.state.score - input.points;
         if(nextScore < 0) {
             return;
@@ -38,13 +41,24 @@ class Game extends React.Component {
             }
             //Win
             this.setState({win : true});
+            let toSend = {
+                game : this.state.game,
+                doubleOut : this.state.doubleout,
+                shots : this.state.shots
+            };
+            /*axios.post("/singleplayer", toSend).then(res => {
+
+            });*/
+        }
+        if(nextScore == 1 && this.state.doubleOut) {
+            return;
         }
         this.setState({score : nextScore});
     }
 
     render() {
         const display = this.state.win ? (
-            <p>WIN!!!!</p>
+            <DisplayResults game={{shots : this.state.shots}} />
         ) : (
             <div>
                 <p>Game: {this.state.game}</p>
