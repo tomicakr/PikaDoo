@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -10,8 +11,9 @@ import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 
 import Favicon from 'react-favicon';
-import NavigationBar from '../components/NavigationBar';
+import { NavigationBar } from '../components/NavigationBar';
 import SinglePlayer from '../components/SinglePlayer';
+import withNavigation from '../_components/withNavigation';
 
 
 class App extends React.Component {
@@ -24,9 +26,10 @@ class App extends React.Component {
             dispatch(alertActions.clear());
         });
     }
-
+    
     render() {
         const { alert } = this.props;
+
         return (
             <Router history={history}>
                 <div>
