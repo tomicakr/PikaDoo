@@ -5,15 +5,12 @@ import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
-import { PrivateRoute } from '../_components';
-import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 
 import Favicon from 'react-favicon';
 import { NavigationBar } from '../components/NavigationBar';
 import SinglePlayer from '../components/SinglePlayer';
-import withNavigation from '../_components/withNavigation';
 
 
 class App extends React.Component {
