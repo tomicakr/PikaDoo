@@ -5,23 +5,20 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../webpack.config.dev';
 
 import bodyParser from 'body-parser';
 
 let app = express();
 
-const compiler = webpack(webpackConfig);
+const publicPath = express.static(path.join(__dirname, '../'));
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(publicPath);
 
-app.use(webpackMiddleware(compiler, {
-    hot: true,
-    publicPath: webpackConfig.output.publicPath,
-    noInfo: true
-}));
-app.use(webpackHotMiddleware(compiler));
+
 
 app.use(require('./signup'));
 app.use(require('./login'));
