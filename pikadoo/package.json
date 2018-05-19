@@ -6,7 +6,7 @@
     "url": "https://github.com/tomislavKravarscan/PikaDoo"
   },
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open && node run server/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
