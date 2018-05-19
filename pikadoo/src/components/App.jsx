@@ -11,6 +11,7 @@ import { RegisterPage } from './RegisterPage';
 import Favicon from 'react-favicon';
 import { NavigationBar } from './NavigationBar';
 import SinglePlayer from './SinglePlayer';
+import MultiPlayer from './MultiPlayer';
 
 
 class App extends React.Component {
@@ -39,6 +40,7 @@ class App extends React.Component {
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
                         <Route exact path="/singleplayer" component={SinglePlayer} />
+                        <Route exact path="/multiplayer" component={MultiPlayer} />
                     </div>
                 </div>
             </Router>
@@ -54,4 +56,4 @@ function mapStateToProps(state) {
 }
 
 const connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App }; 
+export { connectedApp as App };

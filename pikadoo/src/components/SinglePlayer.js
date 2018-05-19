@@ -1,5 +1,6 @@
 import React from 'react';
 import Game from './Game';
+import { connect } from 'react-redux';
 
 
 class SinglePlayer extends React.Component {
@@ -8,14 +9,22 @@ class SinglePlayer extends React.Component {
         this.state = {
             gameIsRunning : false,
             isNewGameClicked : false,
-            game : null,
+            game : "301",
             doubleOut : false
         }
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        const selected = event.target.value;
+        this.setState({game : selected});
     }
 
     render() {
+        const { user } = this.props;
         let newGameOrGame = this.state.gameIsRunning ? (
-            <Game game={this.state.game} doubleOut={this.state.doubleOut} />
+            <Game game={this.state.game} doubleOut={this.state.doubleOut} players={[user.username]}/>
         ) : (
             <div>
                  <button type="button" className="btn btn-lg btn-primary"
@@ -23,20 +32,18 @@ class SinglePlayer extends React.Component {
                  >New Game</button>
             </div>
         );
+
         if(!this.state.gameIsRunning && this.state.isNewGameClicked) {
             newGameOrGame = (
                 <div>
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-primary"
-                           onClick={() => this.setState({game : "501"})}
-                           >501</button>
-                        <button type="button" className="btn btn-primary"
-                           onClick={() => this.setState({game : "301"})}
-                           >301</button>
-                        <button type="button" className="btn btn-primary"
-                           onClick={() => this.setState({game : "701"})}
-                           >701</button>
-                    </div>
+
+                    <h1>Select game type:
+                        <select value={this.state.game} onChange={this.handleChange}>
+                            <option value="301">301</option>
+                            <option value="501">501</option>
+                            <option value="701">701</option>
+                        </select>
+                    </h1>
 
                     <div className="form-check">
                        <input type="checkbox" className="filled-in form-check-input" id="checkbox325"
@@ -60,5 +67,13 @@ class SinglePlayer extends React.Component {
         );
     }
 }
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user, loggedIn } = authentication;
+    return {
+        user,
+        loggedIn
+    };
+}
 
-export default SinglePlayer;
+export default connect(mapStateToProps)(SinglePlayer);

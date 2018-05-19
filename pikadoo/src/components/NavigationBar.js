@@ -21,7 +21,7 @@ class NavigationBar extends React.Component {
                                 <li><a href="/singleplayer"><span className="text-white">Single-player</span></a></li>
                             </ul>
                             <ul className="nav navbar-nav">
-                                <li><a href="#"><span className="text-white">Multi-player</span></a></li>
+                                <li><Link to="/multiplayer"><span className="text-white">Multi-player</span></Link></li>
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
                                 <li><a href="/profile"><span className="text-white">Hello, {user.username}!</span></a></li>
