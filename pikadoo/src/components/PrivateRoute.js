@@ -6,23 +6,19 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
-const PrivateRoute = ({ component: Component, ...rest }) => {
 
-  const { user, loggedIn } = this.props;
-  // Add your own authentication on the below line.
-
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        loggedIn ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-        )
-      }
-    />
-  )
+class PrivateRoute extends React.Component {
+    render() {
+       const {component: Component, ...rest} = this.props;
+       const { user, loggedIn } = this.props
+       return (
+         <Route {...rest} render={props => (
+             loggedIn
+                 ? <Component {...props} />
+                 : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+         )} />
+       );
+    }
 }
 
 function mapStateToProps(state) {

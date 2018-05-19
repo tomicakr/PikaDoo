@@ -7,6 +7,7 @@ import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { LoginPage } from './LoginPage';
 import { RegisterPage } from './RegisterPage';
+import { PrivateRoute } from './PrivateRoute'
 
 import Favicon from 'react-favicon';
 import { NavigationBar } from './NavigationBar';
@@ -39,7 +40,7 @@ class App extends React.Component {
                         }
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
-                        <Route exact path="/singleplayer" component={SinglePlayer} />
+                        <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
                         <Route exact path="/multiplayer" component={MultiPlayer} />
                     </div>
                 </div>
