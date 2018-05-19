@@ -16,15 +16,25 @@ function login(username, password) {
         dispatch(request({ username }));
 
         userService.login(username, password)
-            .then(
-                user => { 
-                    dispatch(success(user));
+            .then( (response) => {
+                if( response.data.errorsExist ) {
+                    // const { error } = response.data;
+                    dispatch(failure(response.data.error));
+                    dispatch(alertActions.error(response.data.error));
+                } else {
+                    dispatch(success({username}));
                     history.push('/singleplayer');
-                },
-                error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
                 }
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+                // user => { 
+                //     dispatch(success(user));
+                //     history.push('/singleplayer');
+                // },
+                // error => {
+                //     dispatch(failure(error));
+                //     dispatch(alertActions.error(error));
+                // }
             );
     };
 

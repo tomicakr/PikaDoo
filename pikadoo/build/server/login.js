@@ -15,11 +15,10 @@ router.post('/login', function (req, res) {
     var errors = req.validationErrors();
 
     if (errors) {
-        res.json({ errorsExist: true, errors: errors });
+        console.log(errors);
+        res.json({ errorsExist: true, error: errors[0].msg });
         return;
     }
-
-    var userForSession = { username: user.username, email: user.email, password: user.password };
 
     db.users.findOne({
         $or: [{ username: user.username, password: user.password }, { email: user.username, password: user.password }]
@@ -30,15 +29,13 @@ router.post('/login', function (req, res) {
 
         if (doc) {
             res.status(200).json({
-                errorsExist: false,
-                token: 'fake-jwt-token'
+                errorsExist: false
             });
-            req.session.sessionUser = userForSession;
 
             return;
         }
 
-        res.status(401).json({ errorsExist: true, errors: [{ msg: "Korisnik ili lozinka pogrešni" }] });
+        res.json({ errorsExist: true, error: "Korisnik ili lozinka pogrešni" });
     });
 });
 
