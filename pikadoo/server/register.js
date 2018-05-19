@@ -7,7 +7,7 @@ router.use(require('express-validator')());
 
 var db = mongojs('pikadoo', ['users']);
 
-router.post('/signup', (req, res) => {
+router.post('/register', (req, res) => {
     const user = req.body.user;
     req.checkBody('user.email', 'Invalid email').isEmail();
     req.checkBody('user.username', 'Username cannot be empty').notEmpty();
@@ -18,7 +18,7 @@ router.post('/signup', (req, res) => {
 
     
     if(errors) {
-        res.json({errorsExist: true, errors: errors});
+        res.json({errorsExist: true, error: errors[0]});
         return;
     }
     
@@ -33,7 +33,7 @@ router.post('/signup', (req, res) => {
 
         console.log(doc);
         if(doc){
-            res.json({errorsExist: true, errors: [{msg: "Korisnik već postoji"}]});
+            res.json({errorsExist: true, error: {msg: "Korisnik već postoji"}});
             
             return;
         }

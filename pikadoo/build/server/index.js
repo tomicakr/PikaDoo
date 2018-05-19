@@ -38,7 +38,7 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(publicPath);
 
-app.use(require('./signup'));
+app.use(require('./register'));
 app.use(require('./login'));
 app.get('/*', function (req, res) {
     res.sendFile(_path2.default.join(__dirname, './index.html'));

@@ -53,16 +53,25 @@ function register(user) {
         dispatch(request(user));
 
         userService.register(user)
-            .then(
-                user => { 
+            .then( (response) => {
+                if(response.data.errorsExist){
+                    dispatch(failure(response.data.error.msg));
+                    dispatch(alertActions.error(response.data.error.msg));
+                } else {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
-                },
-                error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
                 }
+            }
+                // user => { 
+                //     dispatch(success());
+                //     history.push('/login');
+                //     dispatch(alertActions.success('Registration successful'));
+                // },
+                // error => {
+                //     dispatch(failure(error));
+                //     dispatch(alertActions.error(error));
+                // }
             );
     };
 

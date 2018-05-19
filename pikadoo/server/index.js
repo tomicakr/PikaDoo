@@ -20,7 +20,7 @@ app.use(publicPath);
 
 
 
-app.use(require('./signup'));
+app.use(require('./register'));
 app.use(require('./login'));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));

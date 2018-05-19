@@ -58,13 +58,8 @@ function getById(id) {
 }
 
 function register(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch('/users/register', requestOptions).then(handleResponse);
+    console.log(user);
+    return axios.post('/register', {user});
 }
 
 function update(user) {
