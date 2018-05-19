@@ -1,4 +1,5 @@
 import { authHeader } from '../_helpers';
+import axios from 'axios';
 
 export const userService = {
     login,
@@ -11,13 +12,8 @@ export const userService = {
 };
 
 function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    };
 
-    return fetch('/users/authenticate', requestOptions)
+    return axios.post('/login', { user: {username, password} })
         .then(response => {
             if (!response.ok) { 
                 return Promise.reject(response.statusText);

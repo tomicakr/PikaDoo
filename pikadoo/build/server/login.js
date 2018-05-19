@@ -30,14 +30,15 @@ router.post('/login', function (req, res) {
 
         if (doc) {
             res.status(200).json({
-                errorsExist: false
+                errorsExist: false,
+                token: 'fake-jwt-token'
             });
             req.session.sessionUser = userForSession;
 
             return;
         }
 
-        res.json({ errorsExist: true, errors: [{ msg: "Korisnik ili lozinka pogrešni" }] });
+        res.status(401).json({ errorsExist: true, errors: [{ msg: "Korisnik ili lozinka pogrešni" }] });
     });
 });
 
