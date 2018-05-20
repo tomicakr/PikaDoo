@@ -13,6 +13,7 @@ import Favicon from 'react-favicon';
 import { NavigationBar } from './NavigationBar';
 import SinglePlayer from './SinglePlayer';
 import MultiPlayer from './MultiPlayer';
+import {HomePage} from './HomePage';
 
 
 class App extends React.Component {
@@ -38,6 +39,7 @@ class App extends React.Component {
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
+                        <Route exact path="/home" component={HomePage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
                         <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
