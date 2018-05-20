@@ -2,7 +2,7 @@ singleplayer multiplayer i statistika
 
 povezat s bazom statistiku
 
-implikacije u bacanju: oblik, prekoracenje ...
+implikacije u bacanju: oblik...
 
 profil gdje je statistika: username, email
                             popis igara -> single i multi,
@@ -17,5 +17,4 @@ prebacivanje - stavit npr disable multiplayer
 
 stavit gumb za miss
 
-klik na plocu za svaku strelicu
                 

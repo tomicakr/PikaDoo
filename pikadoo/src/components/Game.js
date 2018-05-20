@@ -33,23 +33,31 @@ class Game extends React.Component {
             scores : myScores,
             currPlayerIndex : 0,
             win : false,
-            shots : []
+            shots : [],
+            roundStartScore : 0
         }
     }
 
     handleSelectedPoints(input) {
         input.player = this.props.players[this.state.currPlayerIndex];
+        input.valid = true;
         this.state.shots.push(input);
+
         const { scores } = this.state;
         const currScore = scores[this.state.currPlayerIndex];
+        if(this.state.shots.length % 3 === 1) {
+            this.state.roundStartScore = currScore;
+        }
+
         let nextScore = currScore - input.points;
         let endEarly = false;
         if(nextScore < 0) {
-            nextScore = currScore;
+            nextScore = this.state.roundStartScore;
             endEarly = true;
         } else if(nextScore == 0) {
             if(this.state.doubleOut && input.quantifier != 2) {
-                nextScore = currScore;
+                nextScore = this.state.roundStartScore;
+                endEarly = true;
             } else {
                 //Win
                 this.setState({win : true});
@@ -64,10 +72,20 @@ class Game extends React.Component {
                 });*/
             }
         } else if(nextScore == 1 && this.state.doubleOut) {
-            nextScore = currScore;
+            nextScore = this.state.roundStartScore;
+            endEarly = true;
         }
         scores[this.state.currPlayerIndex] = nextScore;
-        if(this.state.shots.length % 3 == 0 || endEarly) {
+
+        while(endEarly && this.state.shots.length % 3 !== 0) {
+            this.state.shots.push({
+                selectedField : null,
+                quantifier : null,
+                valid : false,
+                player : this.props.players[this.state.currPlayerIndex]
+            });
+        }
+        if(this.state.shots.length % 3 === 0) {
             this.state.currPlayerIndex = (this.state.currPlayerIndex + 1) % this.props.players.length;
         }
         this.setState({scores});
