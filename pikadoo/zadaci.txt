@@ -13,7 +13,6 @@ profil gdje je statistika: username, email
 
 reload - prompt na izlazak
 
-prebacivanje - stavit npr disable multiplayer
 
 stavit gumb za miss
 
