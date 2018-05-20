@@ -1,0 +1,21 @@
+singleplayer multiplayer i statistika
+
+povezat s bazom statistiku
+
+implikacije u bacanju: oblik, prekoracenje ...
+
+profil gdje je statistika: username, email
+                            popis igara -> single i multi,
+                            single:    prikaz je datum, na klik popis rundi,
+                            multi: isto datum, ko je pobijedio i npr u koliko rundi, na klik popis rundi  
+
+                globalna statistika: koliko igra odigrano, koliko pobjeda, prosjek izlazaka
+
+reload - prompt na izlazak
+
+prebacivanje - stavit npr disable multiplayer
+
+stavit gumb za miss
+
+klik na plocu za svaku strelicu
+                

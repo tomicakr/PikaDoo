@@ -2,6 +2,7 @@ import React from 'react';
 import Board from './Board';
 import DisplayResults from './DisplayResults';
 import axios from 'axios';
+import { Prompt } from 'react-router'
 
 class Game extends React.Component {
     constructor(props) {
@@ -113,6 +114,7 @@ class Game extends React.Component {
         return (
             <div>
                 {display}
+                <Prompt message="Are you sure you want to leave?"/>
             </div>
         );
     }
