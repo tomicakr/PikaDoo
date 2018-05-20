@@ -24,10 +24,10 @@ class NavigationBar extends React.Component {
                                 <li><Link to="/multiplayer"><span className="text-white">Multi-player</span></Link></li>
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
-                                <li><a href="/profile"><span className="text-white">Hello, {user.username}!</span></a></li>
+                                <li><Link to="/login"><span className="glyphicon glyphicon-log-out" href="/login"></span> Logout</Link></li>
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
-                                <li><Link to="/login"><span className="glyphicon glyphicon-log-out" href="/login"></span> Logout</Link></li>
+                                <li><a href="/profile"><span className="text-white">Hello, {user.username}!</span></a></li>
                             </ul>
                         </div>
                     }

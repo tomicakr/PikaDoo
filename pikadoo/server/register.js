@@ -37,7 +37,7 @@ router.post('/register', (req, res) => {
             
             return;
         }
-
+ 
         db.users.insert(userToSave);
         res.status(200).json({
             errorsExist:false

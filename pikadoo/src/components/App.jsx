@@ -41,7 +41,7 @@ class App extends React.Component {
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
                         <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
-                        <Route exact path="/multiplayer" component={MultiPlayer} />
+                        <PrivateRoute exact path="/multiplayer" component={MultiPlayer} />
                     </div>
                 </div>
             </Router>
