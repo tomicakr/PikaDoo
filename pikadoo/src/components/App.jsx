@@ -39,7 +39,7 @@ class App extends React.Component {
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
-                        <Route exact path="/home" component={HomePage} />
+                        <Route exact path="/" component={HomePage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
                         <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
