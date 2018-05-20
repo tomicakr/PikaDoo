@@ -42,8 +42,10 @@ class Game extends React.Component {
         const { scores } = this.state;
         const currScore = scores[this.state.currPlayerIndex];
         let nextScore = currScore - input.points;
+        let endEarly = false;
         if(nextScore < 0) {
             nextScore = currScore;
+            endEarly = true;
         } else if(nextScore == 0) {
             if(this.state.doubleOut && input.quantifier != 2) {
                 nextScore = currScore;
@@ -64,7 +66,7 @@ class Game extends React.Component {
             nextScore = currScore;
         }
         scores[this.state.currPlayerIndex] = nextScore;
-        if(this.state.shots.length % 3 == 0) {
+        if(this.state.shots.length % 3 == 0 || endEarly) {
             this.state.currPlayerIndex = (this.state.currPlayerIndex + 1) % this.props.players.length;
         }
         this.setState({scores});
