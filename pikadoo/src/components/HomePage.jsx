@@ -8,36 +8,26 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div className="site-wrapper">
+            <div className="site-wrapper ">
 
                 <div className="site-wrapper-inner">
 
-                    <div className="cover-container">
-
-                        <div className="masthead clearfix">
-                            <div className="inner">
-                                <h3 className="masthead-brand">Cover</h3>
-                                <nav>
-                                    <ul className="nav masthead-nav">
-                                        <li className="active"><a href="#">Home</a></li>
-                                        <li><a href="#">Features</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                    <div className="cover-container ">
 
                         <div className="inner cover">
-                            <h1 className="cover-heading">Cover your page.</h1>
-                            <p className="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+                            <h1 className="cover-heading ">Darts</h1>
+                            <p className="lead">Darts is a sport in which small missiles/torpedoes/arrows/darts are thrown at a circular dartboard fixed to a wall. Though various boards and rules have been used in the past, the term "darts" usually now refers to a standardised game involving a specific board design and set of rules. </p>
                             <p className="lead">
-                                <a href="#" className="btn btn-lg btn-default">Learn more</a>
+                                As well as being a professional competitive game, darts is a traditional pub game, commonly played in Britain and Ireland, across the Commonwealth, the Netherlands, Belgium, Germany, the Scandinavian countries, the United States, and elsewhere.
+                            </p>
+                            <p className="lead">
+                                <a href="/singleplayer" className="btn btn-lg btn-default">Play</a>
                             </p>
                         </div>
 
                         <div className="mastfoot">
                             <div className="inner">
-                                <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+                                <p>inspiracion</p>
                             </div>
                         </div>
 

@@ -74,7 +74,7 @@ class Game extends React.Component {
         const display = this.state.win ? (
             <DisplayResults game={{shots : this.state.shots}} players={this.props.players}/>
         ) : (
-            <div>
+            <div className="container">
                 <p>Game: {this.state.game}</p>
                 <p>Player: {this.props.players[this.state.currPlayerIndex]}</p>
                 <p>Score: {this.state.scores[this.state.currPlayerIndex]}</p>

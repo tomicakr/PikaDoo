@@ -35,7 +35,7 @@ class MultiPlayer extends React.Component {
     render() {
         if(!this.state.gameIsRunning) {
             return (
-                <div>
+                <div className="container">
                     <h1>Select game type:
                         <select value={this.state.gameType} onChange={(evnt) => this.setState({gameType : evnt.target.value})}>
                             <option value="301">301</option>
