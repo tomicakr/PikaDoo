@@ -5,7 +5,8 @@ class Board extends React.Component {
         super(props);
         this.state = {
             selectedField : null,
-            quantifier : 1
+            quantifier : 1,
+            index : null
         }
     }
 
@@ -43,22 +44,49 @@ class Board extends React.Component {
 
         let values = [6, 13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6];
         const index = Math.ceil((angle + 9) / 18 - 1);
-        this.setState({selectedField : values[index]});
+        this.setState({selectedField : values[index], index});
 
     }
 
+/*
+
+    <svg width="325" height="325" version="1.1">
+        <image src={require('../../res/papikado.png')} onClick={this.onClick.bind(this)}
+         x="0" y="0" height="325" width="325"/>
+         <polygon points="175 160 291 141 292 151 292 170 291 183 175 164"
+            stroke="black" fillOpacity="0.5" />
+    </svg>
+    <img src={require('../../res/papikado.png')} onClick={this.onClick.bind(this)} />
+*/
+
     render() {
         const selected = (this.state.selectedField == null) ? "Nothing selected" : this.state.selectedField * this.state.quantifier;
+        const rotation = "rotate(" + -this.state.index * 18 + ", 162.5, 162.5)";
+        let drawSelectedField = "";
+        if (this.state.selectedField === 25) {
+            drawSelectedField = (
+                <circle cx="162.5" cy="162.5" r="13" fillOpacity="0.5" fill="yellow" />
+            );
+        } else if (this.state.selectedField !== null && this.state.selectedField !== 0){
+            drawSelectedField = (
+                    <polygon points="176 160 299 140 300 149 301 162 300 175 299 184 176 165"
+                        fill="yellow" fillOpacity="0.5" transform={rotation}/>
+                );
+           }
         return (
             <div className='container-fluid'>
-                <img src={require('../../res/papikado.png')} onClick={this.onClick.bind(this)} />
+            <svg height="325" width="325" transform="scale(1, 1)">
+                <image href={require('../../res/papikado.png')} height="325" width="325" onClick={this.onClick.bind(this)}/>
+                {drawSelectedField}
+            </svg>
+
                 <br />
                 <div className="btn-group">
                   <button type="button" className={this.state.quantifier===1 ? "btn btn-default active" : "btn btn-default"}
                     onClick={() => this.setState({quantifier : 1})}>Single</button>
                   <button type="button" className={this.state.quantifier===2 ? "btn btn-default active" : "btn btn-default"}
                     onClick={() => this.setState({quantifier : 2})}>Double</button>
-                  <button type="button" className={this.state.quantifier===3 ? "btn btn-default active" : "btn btn-default"} 
+                  <button type="button" className={this.state.quantifier===3 ? "btn btn-default active" : "btn btn-default"}
                     onClick={() => this.setState({quantifier : 3})}
                     disabled={this.state.selectedField == 25}>Triple</button>
                 </div>

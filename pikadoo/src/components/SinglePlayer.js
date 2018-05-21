@@ -8,7 +8,7 @@ class SinglePlayer extends React.Component {
         super(props);
         this.state = {
             gameIsRunning: false,
-            game: "301",
+            gameType: "301",
             doubleOut: false
         }
 
@@ -17,7 +17,7 @@ class SinglePlayer extends React.Component {
 
     handleChange(event) {
         const selected = event.target.value;
-        this.setState({ game: selected });
+        this.setState({ gameType : selected });
     }
 
     render() {
@@ -27,7 +27,7 @@ class SinglePlayer extends React.Component {
                 <div className='container'>
                     <div>
                         <h1>Select game type:
-                        <select value={this.state.game} onChange={this.handleChange}>
+                        <select value={this.state.gameType} onChange={this.handleChange}>
                                 <option value="301">301</option>
                                 <option value="501">501</option>
                                 <option value="701">701</option>
@@ -42,7 +42,7 @@ class SinglePlayer extends React.Component {
 
                         <button type="button" className="btn btn-primary"
                             onClick={() => this.setState({ gameIsRunning: true })}
-                            disabled={this.state.game == null}>
+                            disabled={this.state.gameType == null}>
                             Begin
                         </button>
                     </div>
@@ -51,12 +51,13 @@ class SinglePlayer extends React.Component {
         } else {
             return (
                 <div className='container'>
-                    <Game game={this.state.game} doubleOut={this.state.doubleOut} players={[user.username]} />
+                    <Game gameType={this.state.gameType} doubleOut={this.state.doubleOut} players={[user.username]} />
                 </div>
             )
         }
     }
 }
+
 function mapStateToProps(state) {
     const { authentication } = state;
     const { user, loggedIn } = authentication;

@@ -6,7 +6,7 @@ router.use(require('express-validator')());
 
 var db = mongojs('pikadoo', ['users']);
 
-router.post('/login', (req, res) => {
+router.post('/', (req, res) => {
     const user = req.body.user;
     req.checkBody('user.username', 'Username cannot be empty').notEmpty();
     req.checkBody('user.password', 'Password cannot be empty').notEmpty();

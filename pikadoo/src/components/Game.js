@@ -2,13 +2,14 @@ import React from 'react';
 import Board from './Board';
 import DisplayResults from './DisplayResults';
 import axios from 'axios';
-import { Prompt } from 'react-router'
+import { Prompt } from 'react-router';
+import { connect } from 'react-redux';
 
 class Game extends React.Component {
     constructor(props) {
         super(props);
         let myScore = 0;
-        switch(props.game) {
+        switch(props.gameType) {
             case "501":
                 myScore = 501;
                 break;
@@ -28,13 +29,17 @@ class Game extends React.Component {
         }
 
         this.state = {
-            game : props.game,
+            gameType : props.gameType,
             doubleOut : props.doubleOut,
             scores : myScores,
             currPlayerIndex : 0,
             win : false,
             shots : [],
             roundStartScore : 0
+        };
+
+        window.onbeforeunload = function(){
+            return "Are you sure you want to close the window?";
         }
     }
 
@@ -60,16 +65,17 @@ class Game extends React.Component {
                 endEarly = true;
             } else {
                 //Win
-                this.setState({win : true});
-                let toSend = {
-                    game : this.state.game,
+                
+                let game = {
+                    gameType : this.state.gameType,
                     doubleOut : this.state.doubleout,
                     players : this.props.players,
-                    shots : this.state.shots
+                    shots : this.state.shots,
+                    scores : this.state.scores,
+                    user : this.props.user
                 };
-                /*axios.post("/singleplayer", toSend).then(res => {
-
-                });*/
+                axios.post("/game", { game });
+                this.setState({win : true});
             }
         } else if(nextScore == 1 && this.state.doubleOut) {
             nextScore = this.state.roundStartScore;
@@ -82,7 +88,7 @@ class Game extends React.Component {
                 selectedField : null,
                 quantifier : null,
                 valid : false,
-                player : this.props.players[this.state.currPlayerIndex]
+                player : input.player
             });
         }
         if(this.state.shots.length % 3 === 0) {
@@ -96,7 +102,7 @@ class Game extends React.Component {
             <DisplayResults game={{shots : this.state.shots}} players={this.props.players}/>
         ) : (
             <div className="container">
-                <p>Game: {this.state.game}</p>
+                <p>Game: {this.state.gameType}</p>
                 <p>Player: {this.props.players[this.state.currPlayerIndex]}</p>
                 <p>Score: {this.state.scores[this.state.currPlayerIndex]}</p>
 
@@ -132,11 +138,23 @@ class Game extends React.Component {
         return (
             <div>
                 {display}
-                <Prompt message="Are you sure you want to leave?"/>
+                <Prompt message="Game is in progress. Are you sure you want to leave?"/>
             </div>
         );
     }
 
+    componentWillUnmount() {
+        window.onbeforeunload = function(){
+        }
+    }
 }
 
-export default Game;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user
+    };
+}
+
+export default connect(mapStateToProps)(Game);

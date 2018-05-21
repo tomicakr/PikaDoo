@@ -1,14 +1,21 @@
 import React from 'react';
+import { alertActions } from '../_actions';
+import { connect } from 'react-redux';
+
 class DisplayResults extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             shots : props.game.shots
         };
+        //this.props.dispatch(alertActions.success('Uspješno spremljeno'));
     }
 
     render() {
         return (
+        <div>
+            <div className={`alert alert-success`}>Uspješno spremljeno</div>
             <table className="table table-bordered">
                 <thead className="dark">
                     <tr>
@@ -36,9 +43,14 @@ class DisplayResults extends React.Component {
                     })}
                 </tbody>
             </table>
-
+        </div>
         );
     }
 }
 
-export default DisplayResults;
+function mapStateToProps(state) {
+    return {
+    };
+}
+
+export default connect(mapStateToProps)(DisplayResults);

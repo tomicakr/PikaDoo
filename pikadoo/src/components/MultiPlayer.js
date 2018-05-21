@@ -6,7 +6,7 @@ class MultiPlayer extends React.Component {
         super(props);
 
         this.state = {
-            game : "301",
+            gameType : "301",
             doubleOut : false,
             numOfPlayers : 2,
             players : [],
@@ -37,7 +37,7 @@ class MultiPlayer extends React.Component {
             return (
                 <div className="container">
                     <h1>Select game type:
-                        <select value={this.state.game} onChange={(evnt) => this.setState({game : evnt.target.value})}>
+                        <select value={this.state.gameType} onChange={(evnt) => this.setState({gameType : evnt.target.value})}>
                             <option value="301">301</option>
                             <option value="501">501</option>
                             <option value="701">701</option>
@@ -78,7 +78,7 @@ class MultiPlayer extends React.Component {
             );
         } else {
             return (
-                <Game game={this.state.game} doubleOut={this.state.doubleOut} players={this.state.players} />
+                <Game gameType={this.state.gameType} doubleOut={this.state.doubleOut} players={this.state.players} />
             );
         }
     }
