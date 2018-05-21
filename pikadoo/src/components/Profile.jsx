@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { userActions } from '../_actions';
+import DisplayResults from './DisplayResults';
+
 
 class Profile extends React.Component {
     componentDidMount() {
-        console.log("uslooooo");
         // zato što ako se ovo zove /profile, onda se i na backendu mora zvat /profile,
         // a onda ako upisemo /profile rucno u browser napravit ce get zahjev na to i nece prikazat
         // stranicu nego samo json koji dobije
@@ -18,8 +19,7 @@ class Profile extends React.Component {
             this.setState({ ...res.data });
             console.log(res.data);
         });
-
-        console.log("izassloooooo");
+        console.log("component did mount");
     }
 
     constructor(props) {
@@ -28,58 +28,73 @@ class Profile extends React.Component {
         this.state = {
             username: '',
             email: '',
-            games: []
+            games: [],
+            showDetails: false,
+            detailsIndex: 0
         };
     }
 
+    handleShowDetails(index) {
+        console.log(index);
+        this.setState({ showDetails: true, detailsIndex: index });
+    }
+
     render() {
-        const { username, email, games } = this.state;
-        return (
-            <div className="col-md-6 col-md-offset-3">
-
-                <h1>{username}</h1>
-                <h2><a href={"mailto:" + email}>{email}</a></h2>
-
-                <br/><br/><br/>
-
-                {
-                    games.length !== 0 &&
-
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Number</th>
-                                <th>Type</th>
-                                <th>Mode</th>
-                                <th>Number Of Players</th>
-                                <th>Winner</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                games.map((game, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{index}</td>
-                                            <td>{game.gameType}</td>
-                                            <td>{game.mode}</td>
-                                            <td>{game.players.length}</td>
-                                            <td>{game.winner}</td>
-                                            <td><button className="btn btn-small">Game Details</button></td>
-                                        </tr>
-                                    );
-                                }
-                                )
-                            }
-                        </tbody>
-                    </table>
-                }
-                {
-                    games.length === 0 &&
-                    <p>User hasn't been involved in any games yet.</p>
-                }
+        const { username, email, games, detailsIndex } = this.state;
+        const display = this.state.showDetails ? (
+            <div>
+                <DisplayResults game={{ shots: games[detailsIndex].shots }} players={games[detailsIndex].players} />
+                <h3><Link to="/profile">Return</Link></h3>
             </div>
+        ) : (
+                <div>
 
+                    <h1>{username}</h1>
+                    <h2><a href={"mailto:" + email}>{email}</a></h2>
+
+                    <br /><br /><br />
+
+                    {
+                        games.length !== 0 &&
+
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Type</th>
+                                    <th>Mode</th>
+                                    <th>Number Of Players</th>
+                                    <th>Winner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    games.map((game, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index}</td>
+                                                <td>{game.gameType}</td>
+                                                <td>{game.mode}</td>
+                                                <td>{game.players.length}</td>
+                                                <td>{game.winner}</td>
+                                                <td><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
+                                            </tr>
+                                        );
+                                    }
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    {
+                        games.length === 0 &&
+                        <p>User hasn't been involved in any games yet.</p>
+                    }
+                </div>)
+        return (
+            <div className="container">
+                {display}
+            </div>
         );
     }
 }

@@ -17,7 +17,7 @@ class DisplayResults extends React.Component {
     render() {
         return (
         <div>
-            <div className={`alert alert-success`}>Uspješno spremljeno</div>
+            {/*<div className={`alert alert-success`}>Uspješno spremljeno</div>*/}
             <table className="table table-bordered">
                 <thead className="dark">
                     <tr>
