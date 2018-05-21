@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { LoginPage } from './LoginPage';
 import { RegisterPage } from './RegisterPage';
-import { PrivateRoute } from './PrivateRoute'
+//import { PrivateRoute } from './PrivateRoute'
 
 import Favicon from 'react-favicon';
 import { NavigationBar } from './NavigationBar';
@@ -29,7 +29,13 @@ class App extends React.Component {
 
     render() {
         const { alert } = this.props;
-
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+                  <Route {...rest} render={(props) => (
+                    this.props.loggedIn
+                      ? <Component {...props} />
+                      : <Redirect to={{ pathname: '/login', state: { from: props.location } }}/>
+                  )} />
+        );
         return (
             <Router history={history}>
                 <div>
@@ -52,9 +58,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { alert } = state;
+    const { alert, authentication } = state;
+    const { loggedIn } = authentication;
     return {
-        alert
+        alert,
+        loggedIn
     };
 }
 

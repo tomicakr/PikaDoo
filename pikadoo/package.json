@@ -13,7 +13,7 @@
     "build:client": "webpack --config ./webpack.config.tutorial.js/",
     "build:watch:server": "babel ./server -d build/server --watch",
     "build:watch:client": "webpack --config ./webpack.config.tutorial.js/ --watch",
-    "start:dev": "parallelshell 'npm run build:watch:server' 'npm run build:watch:client' 'nodemon ./build/server/index.js'"
+    "start:dev": "parallelshell \"npm run build:watch:server\" \"npm run build:watch:client\" \"nodemon ./build/server/index.js\""
   },
   "dependencies": {
     "axios": "^0.18.0",

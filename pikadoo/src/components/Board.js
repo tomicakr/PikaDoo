@@ -53,14 +53,20 @@ class Board extends React.Component {
             <div className='container-fluid'>
                 <img src={require('../../res/papikado.png')} onClick={this.onClick.bind(this)} />
                 <br />
-                <div className="btn-group" onChange={((e) => console.log(e.target.value))} data-toggle="buttons">
-                  <button type="button" className="btn btn-default" onClick={() => this.setState({quantifier : 1})}>Single</button>
-                  <button type="button" className="btn btn-default" onClick={() => this.setState({quantifier : 2})}>Double</button>
-                  <button type="button" className="btn btn-default" onClick={() => this.setState({quantifier : 3})}
+                <div className="btn-group">
+                  <button type="button" className={this.state.quantifier===1 ? "btn btn-default active" : "btn btn-default"}
+                    onClick={() => this.setState({quantifier : 1})}>Single</button>
+                  <button type="button" className={this.state.quantifier===2 ? "btn btn-default active" : "btn btn-default"}
+                    onClick={() => this.setState({quantifier : 2})}>Double</button>
+                  <button type="button" className={this.state.quantifier===3 ? "btn btn-default active" : "btn btn-default"} 
+                    onClick={() => this.setState({quantifier : 3})}
                     disabled={this.state.selectedField == 25}>Triple</button>
                 </div>
-                <p>{selected}</p>
-                <button type="button" className="btn btn-primary" onClick={() => this.props.onSelectPoints({points : selected, quantifier : this.state.quantifier})}
+                <p>SELECTED: {selected}</p>
+                <button type="button" className="btn btn-primary" onClick={() => {
+                    this.props.onSelectPoints({points : selected, quantifier : this.state.quantifier});
+                    this.setState({selectedField : null, quantifier : 1});
+                }}
                     disabled={isNaN(parseFloat(selected))}> Select </button>
             </div>
         );

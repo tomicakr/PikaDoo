@@ -22,7 +22,7 @@ class DisplayResults extends React.Component {
                 <tbody>
                     {this.state.shots.map((shot, i) => {
                         const round = Math.floor(i / 3 + 1);
-                        const field = shot.points / shot.quantifier;
+                        const field = shot.valid ? shot.points / shot.quantifier : "---";
                         const rowType = (i % 6 >= 3) ? "info":"sucess";
                         const player = this.props.players[(round - 1) % this.props.players.length];
                         return (
@@ -30,7 +30,7 @@ class DisplayResults extends React.Component {
                                 <th>{round}</th>
                                 <th>{player}</th>
                                 <th>{field}</th>
-                                <th>{shot.quantifier}</th>
+                                <th>{shot.valid ? shot.quantifier : "---"}</th>
                             </tr>
                         );
                     })}

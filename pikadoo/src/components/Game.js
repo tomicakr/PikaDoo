@@ -50,16 +50,22 @@ class Game extends React.Component {
         const { round, rounds } = this.state;
         input.player = this.props.players[this.state.currPlayerIndex];
         rounds[round - 1].shots.push((input.quantifier, input.points)); // push za svaki shot
+        input.valid = true;
         const { scores } = this.state;
         const currScore = scores[this.state.currPlayerIndex];
+        if(this.state.shots.length % 3 === 1) {
+            this.state.roundStartScore = currScore;
+        }
+
         let nextScore = currScore - input.points;
         let endEarly = false;
         if(nextScore < 0) {
-            nextScore = currScore;
+            nextScore = this.state.roundStartScore;
             endEarly = true;
         } else if(nextScore == 0) {
             if(this.state.doubleOut && input.quantifier != 2) {
-                nextScore = currScore;
+                nextScore = this.state.roundStartScore;
+                endEarly = true;
             } else {
                 //Win
                 this.setState({win : true});
@@ -74,7 +80,8 @@ class Game extends React.Component {
                 });*/
             }
         } else if(nextScore == 1 && this.state.doubleOut) {
-            nextScore = currScore;
+            nextScore = this.state.roundStartScore;
+            endEarly = true;
         }
         scores[this.state.currPlayerIndex] = nextScore;
         if(this.state.shots.length % 3 == 0 || endEarly) {
@@ -82,6 +89,17 @@ class Game extends React.Component {
             currPlayerIndex = (currPlayerIndex + 1) % this.props.players.length;
             rounds.push({player: players[currPlayerIndex], shots: []});
             this.setState({rounds, currPlayerIndex});
+
+        while(endEarly && this.state.shots.length % 3 !== 0) {
+            this.state.shots.push({
+                selectedField : null,
+                quantifier : null,
+                valid : false,
+                player : this.props.players[this.state.currPlayerIndex]
+            });
+        }
+        if(this.state.shots.length % 3 === 0) {
+            this.state.currPlayerIndex = (this.state.currPlayerIndex + 1) % this.props.players.length;
         }
         this.setState({scores});
     }
