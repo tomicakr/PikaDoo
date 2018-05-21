@@ -72,7 +72,7 @@ class Game extends React.Component {
                     players : this.props.players,
                     shots : this.state.shots,
                     scores : this.state.scores,
-                    user : this.props.user
+                    user : this.props.user.username
                 };
                 axios.post("/game", { game });
                 this.setState({win : true});
@@ -133,12 +133,12 @@ class Game extends React.Component {
                 </table>
 
                 <Board onSelectPoints={this.handleSelectedPoints.bind(this)}/>
+                <Prompt message="Game is in progress. Are you sure you want to leave?"/>
             </div>
         );
         return (
             <div>
                 {display}
-                <Prompt message="Game is in progress. Are you sure you want to leave?"/>
             </div>
         );
     }

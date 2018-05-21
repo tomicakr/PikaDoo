@@ -16,7 +16,19 @@ router.get('/', (req, res) => {
             return;
         }
 
-        db.games.find({}).forEach((d) => console.log(d));
+        db.games.find({ user: username }, function (err, docs) { 
+            if(err){
+                return;
+            }
+            // let tosend = {
+            //     username: doc.username,
+            //     email: doc.email,
+            //     games: docs
+            // }
+
+            // res.json(tosend);
+            res.json({...doc ,games : docs});
+        });
     })
 });
 

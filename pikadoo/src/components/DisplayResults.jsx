@@ -9,7 +9,9 @@ class DisplayResults extends React.Component {
         this.state = {
             shots : props.game.shots
         };
-        //this.props.dispatch(alertActions.success('Uspješno spremljeno'));
+
+        window.onbeforeunload = function(){
+        }
     }
 
     render() {
@@ -28,7 +30,7 @@ class DisplayResults extends React.Component {
 
                 <tbody>
                     {this.state.shots.map((shot, i) => {
-                        const round = Math.floor(i / 3 + 1);
+                        const round = Math.floor(i / (3*this.props.players.length) + 1);
                         const field = shot.valid ? shot.points / shot.quantifier : "---";
                         const rowType = (i % 6 >= 3) ? "info":"sucess";
                         const player = this.props.players[(round - 1) % this.props.players.length];

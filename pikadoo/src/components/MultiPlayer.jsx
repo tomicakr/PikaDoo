@@ -2,6 +2,10 @@ import React from 'react';
 import Game from './Game';
 
 class MultiPlayer extends React.Component {
+    componentDidMount () {
+        this.handleNumberOfPlayersChange({target: {value: 2}});
+    }
+ 
     constructor(props) {
         super(props);
 
