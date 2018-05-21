@@ -14,6 +14,7 @@ import { NavigationBar } from './NavigationBar';
 import SinglePlayer from './SinglePlayer';
 import MultiPlayer from './MultiPlayer';
 import {HomePage} from './HomePage';
+import Profile from './Profile';
 
 
 class App extends React.Component {
@@ -50,6 +51,7 @@ class App extends React.Component {
                         <Route exact path="/register" component={RegisterPage} />
                         <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
                         <PrivateRoute exact path="/multiplayer" component={MultiPlayer} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
                     </div>
                 </div>
             </Router>
