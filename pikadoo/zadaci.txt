@@ -16,4 +16,6 @@ reload - prompt na izlazak
 
 stavit gumb za miss
 
+
+
                 

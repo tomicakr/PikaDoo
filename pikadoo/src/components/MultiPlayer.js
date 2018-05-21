@@ -6,9 +6,9 @@ class MultiPlayer extends React.Component {
         super(props);
 
         this.state = {
-            gameType : "301",
+            game : "301",
             doubleOut : false,
-            numOfPlayers : 0,
+            numOfPlayers : 2,
             players : [],
             gameIsRunning : false
         };
@@ -18,7 +18,7 @@ class MultiPlayer extends React.Component {
 
     handleNumberOfPlayersChange(e) {
         const numOfPlayers = e.target.value;
-        if(numOfPlayers < 0 || numOfPlayers > 8) return;
+        if(numOfPlayers < 2 || numOfPlayers > 8) return;
 
         let { players } = this.state;
         if(numOfPlayers > players.length) {
@@ -37,7 +37,7 @@ class MultiPlayer extends React.Component {
             return (
                 <div className="container">
                     <h1>Select game type:
-                        <select value={this.state.gameType} onChange={(evnt) => this.setState({gameType : evnt.target.value})}>
+                        <select value={this.state.game} onChange={(evnt) => this.setState({game : evnt.target.value})}>
                             <option value="301">301</option>
                             <option value="501">501</option>
                             <option value="701">701</option>
@@ -71,14 +71,14 @@ class MultiPlayer extends React.Component {
 
                     <button type="button" className="btn btn-lg btn-primary"
                         onClick={() => this.setState({gameIsRunning : true})}
-                        disabled={this.state.numOfPlayers < 1}>
+                        disabled={this.state.numOfPlayers < 2}>
                         Begin
                     </button>
                 </div>
             );
         } else {
             return (
-                <Game game={this.state.gameType} doubleOut={this.state.doubleOut} players={this.state.players} />
+                <Game game={this.state.game} doubleOut={this.state.doubleOut} players={this.state.players} />
             );
         }
     }
