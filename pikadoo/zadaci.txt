@@ -40,14 +40,11 @@ rounds : [player:"", busted : true/false, shots:[], possibleOut : true/false]
 
 
 Globalne stats:
-    broj rundi: min, max, avg  | sm
-
+    
     winrate | m
-    broj bullseye : min, max, avg | sm
-    broj miss: min, max, avg | sm
-    3 X 20: min, max, avg | sm
 
-MultiPlayer: Prvi user po defaultu
+
+    3 X 20: min, max, avg | sm
 
 
 

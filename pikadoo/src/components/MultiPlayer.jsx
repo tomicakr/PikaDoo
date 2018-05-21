@@ -1,11 +1,12 @@
 import React from 'react';
 import Game from './Game';
+import { connect } from 'react-redux';
 
 class MultiPlayer extends React.Component {
     componentDidMount () {
         this.handleNumberOfPlayersChange({target: {value: 2}});
     }
- 
+
     constructor(props) {
         super(props);
 
@@ -13,7 +14,7 @@ class MultiPlayer extends React.Component {
             gameType : "301",
             doubleOut : false,
             numOfPlayers : 2,
-            players : [],
+            players : [this.props.user.username],
             gameIsRunning : false
         };
 
@@ -88,4 +89,14 @@ class MultiPlayer extends React.Component {
     }
 }
 
-export default MultiPlayer;
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
+    return {
+        user
+
+    };
+}
+
+
+export default connect(mapStateToProps)(MultiPlayer);
