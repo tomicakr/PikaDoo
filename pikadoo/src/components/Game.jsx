@@ -54,10 +54,10 @@ class Game extends React.Component {
         const { scores } = this.state;
         const currScore = scores[this.state.currPlayerIndex];
         if (this.state.shots.length % 3 === 1) {
-            this.state.rounds.push([{ points: "-", quantifier: "-" }, { points: "-", quantifier: "-" }, { points: "-", quantifier: "-" }]);
+            this.state.rounds.push([{ points: "-", quantifier: "-", valid : true }, { points: "-", quantifier: "-", valid : true}, { points: "-", quantifier: "-", valid : true}]);
             this.state.roundStartScore = currScore;
         }
-        this.state.rounds[this.state.rounds.length - 1][(this.state.shots.length - 1) % 3] = input;
+
         let nextScore = currScore - input.points;
         let endEarly = false;
         if (nextScore < 0) {
@@ -87,14 +87,21 @@ class Game extends React.Component {
         }
         scores[this.state.currPlayerIndex] = nextScore;
 
+        if(endEarly) input.valid = false;
+        this.state.rounds[this.state.rounds.length - 1][(this.state.shots.length - 1) % 3] = input;
+
         while (endEarly && this.state.shots.length % 3 !== 0) {
+            input.valid = false;
             this.state.shots.push({
                 selectedField: null,
                 quantifier: null,
                 valid: false,
                 player: input.player
             });
+            this.state.rounds[this.state.rounds.length - 1][(this.state.shots.length - 1) % 3] = input;
         }
+
+
         if (this.state.shots.length % 3 === 0) {
             this.state.currPlayerIndex = (this.state.currPlayerIndex + 1) % this.props.players.length;
         }
@@ -104,7 +111,12 @@ class Game extends React.Component {
     render() {
         const display = this.state.win ? (
             <div>
-                <DisplayResults game={{ shots: this.state.shots }} players={this.props.players} />
+                <DisplayResults game={{
+                    shots: this.state.shots,
+                    gameType : this.state.gameType,
+                    players : this.props.players,
+                    scores : this.state.scores
+                 }}  />
                 <h3><Link to={this.props.players > 1 ? "/multiplayer" : "/singleplayer"}>Return</Link></h3>
             </div>
         ) : (
@@ -155,20 +167,30 @@ class Game extends React.Component {
                         </thead>
                         <tbody>
                             {this.state.rounds.map((round, index) => {
-                                const throw0 = round[0].points === 0 ? "miss" : (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
-                                const throw1 = round[1].points === 0 ? "miss" : (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
-                                const throw2 = round[2].points === 0 ? "miss" : (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
-
+                                let throw0 = round[0].points === 0 ? "miss" : (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
+                                let throw1 = round[1].points === 0 ? "miss" : (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
+                                let throw2 = round[2].points === 0 ? "miss" : (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
+                                console.log(round);
+                                if(!round[0].valid) {
+                                    throw0 = "Busted " + (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
+                                    throw1 = "---";
+                                    throw2 = "---";
+                                }
+                                else if(!round[1].valid) {
+                                    throw1 = "Busted " + (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
+                                    throw2 = "---";
+                                }
+                                else if(!round[2].valid) throw2 = "Busted " + (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
                                 return (
                                     <tr key={index}>
-                                        <td>{index + 1}</td>
+                                        <td>{Math.floor(index / this.props.players.length + 1)}</td>
                                         <td> {throw0} </td>
                                         <td> {throw1} </td>
                                         <td> {throw2} </td>
                                         <td> {round[0].player} </td>
                                     </tr>
                                 );
-                            })}
+                            }).reverse()}
                         </tbody>
                     </table>
                 </div>

@@ -2,7 +2,7 @@
 profil gdje je statistika: username, email
                             popis igara -> single i multi,
                             single:    prikaz je datum, na klik popis rundi,
-                            multi: isto datum, ko je pobijedio i npr u koliko rundi, na klik popis rundi  
+                            multi: isto datum, ko je pobijedio i npr u koliko rundi, na klik popis rundi
 
                 globalna statistika: koliko igra odigrano, koliko pobjeda, prosjek izlazaka
 
@@ -39,6 +39,16 @@ game : { winner -> zadnji shot->player, scores, game, doubleOut, players,  }
 rounds : [player:"", busted : true/false, shots:[], possibleOut : true/false]
 
 
+Globalne stats:
+    broj rundi: min, max, avg  | sm
+
+    winrate | m
+    broj bullseye : min, max, avg | sm
+    broj miss: min, max, avg | sm
+    3 X 20: min, max, avg | sm
+
+MultiPlayer: Prvi user po defaultu
+
+
 
 ----------------------------- /WORKSPACE -----------------------
-                

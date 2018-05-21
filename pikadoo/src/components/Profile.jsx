@@ -39,11 +39,21 @@ class Profile extends React.Component {
         this.setState({ showDetails: true, detailsIndex: index });
     }
 
+
+/*
+<DisplayResults game={{
+    shots: this.state.shots,
+    gameType : this.state.gameType,
+    players : this.props.players,
+    scores : this.state.scores
+ }} players={this.props.players} />
+*/
     render() {
         const { username, email, games, detailsIndex } = this.state;
         const display = this.state.showDetails ? (
             <div>
-                <DisplayResults game={{ shots: games[detailsIndex].shots }} players={games[detailsIndex].players} />
+                <DisplayResults game={games[detailsIndex]}  />
+
                 <h3><Link to="/profile">Return</Link></h3>
             </div>
         ) : (
@@ -65,6 +75,7 @@ class Profile extends React.Component {
                                     <th>Mode</th>
                                     <th>Number Of Players</th>
                                     <th>Winner</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +88,9 @@ class Profile extends React.Component {
                                                 <td>{game.mode}</td>
                                                 <td>{game.players.length}</td>
                                                 <td>{game.winner}</td>
+                                                <td>{game.date}</td>
                                                 <td><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
+
                                             </tr>
                                         );
                                     }

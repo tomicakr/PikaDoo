@@ -30,10 +30,10 @@ class DisplayResults extends React.Component {
 
                 <tbody>
                     {this.state.shots.map((shot, i) => {
-                        const round = Math.floor(i / (3*this.props.players.length) + 1);
+                        const round = Math.floor(i / (3*this.props.game.players.length) + 1);
                         const field = shot.valid ? shot.points / shot.quantifier : "---";
                         const rowType = (i % 6 >= 3) ? "info":"sucess";
-                        const player = this.props.players[(round - 1) % this.props.players.length];
+                        const player = this.props.game.players[(round - 1) % this.props.game.players.length];
                         return (
                             <tr className={rowType} key={i}>
                                 <th>{round}</th>
@@ -43,6 +43,32 @@ class DisplayResults extends React.Component {
                             </tr>
                         );
                     })}
+                </tbody>
+            </table>
+
+
+
+            <table className="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th>Players: </th>
+                        {this.props.game.players.map((player, i) =>
+                            <th key={i}>{player}</th>
+                        )}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Scores: </th>
+                        {this.props.game.scores.map((score, i) =>
+                            <td key={i}>{score}</td>
+                        )}
+                    </tr>
+
+                    <tr>
+                        <th>Winner: </th>
+                        <td colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
