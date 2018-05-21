@@ -33,13 +33,23 @@ class Game extends React.Component {
             scores : myScores,
             currPlayerIndex : 0,
             win : false,
-            shots : []
+            shots : [],
+            rounds: [{
+                player: "luka",
+                shots: [(1, 10),(3, 60),(2, 6)]
+            },
+            {
+                player: "tomica",
+                shots: [(1, 10), "miss"]
+            }],
+            round : 1
         }
     }
 
     handleSelectedPoints(input) {
+        const { round, rounds } = this.state;
         input.player = this.props.players[this.state.currPlayerIndex];
-        this.state.shots.push(input);
+        rounds[round - 1].shots.push((input.quantifier, input.points)); // push za svaki shot
         const { scores } = this.state;
         const currScore = scores[this.state.currPlayerIndex];
         let nextScore = currScore - input.points;
@@ -68,7 +78,10 @@ class Game extends React.Component {
         }
         scores[this.state.currPlayerIndex] = nextScore;
         if(this.state.shots.length % 3 == 0 || endEarly) {
-            this.state.currPlayerIndex = (this.state.currPlayerIndex + 1) % this.props.players.length;
+            let { rounds, players, currPlayerIndex } = this.state;
+            currPlayerIndex = (currPlayerIndex + 1) % this.props.players.length;
+            rounds.push({player: players[currPlayerIndex], shots: []});
+            this.setState({rounds, currPlayerIndex});
         }
         this.setState({scores});
     }
@@ -118,7 +131,6 @@ class Game extends React.Component {
             </div>
         );
     }
-
 }
 
 export default Game;
