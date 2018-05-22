@@ -10,13 +10,15 @@ class Profile extends React.Component {
 
     calculateStats() {
         const { games } = this.state;
-        let rounds = {min : 325420, max : -1, avg : 0};
-        let bullseye = {min : 325420, max : -1, avg : 0};
-        let miss = {min : 325420, max : -1, avg : 0};
+        let rounds = { min: 325420, max: -1, avg: 0 };
+        let bullseye = { min: 325420, max: -1, avg: 0 };
+        let miss = { min: 325420, max: -1, avg: 0 };
+        let winRate = 0;
         rounds.count = 0;
-        for(let i = 0;i < games.length;i++) {
+        let wins = 0;
+        for (let i = 0; i < games.length; i++) {
             let currRoundNumber = Math.floor((games[i].shots.length - 1) / (3 * games[i].players.length) + 1);
-            if(games[i].players[0] == this.state.username) {
+            if (games[i].players.includes(this.state.username)) {
                 rounds.min = Math.min(rounds.min, currRoundNumber);
                 rounds.max = Math.max(rounds.max, currRoundNumber);
                 rounds.avg += currRoundNumber;
@@ -25,15 +27,17 @@ class Profile extends React.Component {
                 let shots = games[i].shots;
                 let currBullseyeNumber = 0;
                 let currMissNumber = 0;
-                for(let j = 0;j < shots.length;j++) {
-                    if(shots[j].points === 25 || shots[j].points === 50) {
+                for (let j = 0; j < shots.length; j++) {
+                    if (shots[j].points === 25 || shots[j].points === 50) {
                         currBullseyeNumber++;
                     }
 
-                    if(shots[j].poins === 0) {
+                    if (shots[j].points === 0) {
                         currMissNumber++;
                     }
                 }
+
+                if (games[i].winner === this.state.username) wins++;
 
                 bullseye.min = Math.min(bullseye.min, currBullseyeNumber);
                 bullseye.max = Math.max(bullseye.max, currBullseyeNumber);
@@ -44,13 +48,14 @@ class Profile extends React.Component {
                 miss.avg += currMissNumber;
             }
         }
-        if(rounds.count > 0) {
+        if (rounds.count > 0) {
             rounds.avg /= rounds.count;
             bullseye.avg /= rounds.count;
             miss.avg /= rounds.count;
+            winRate = wins / rounds.count;
         }
 
-        this.setState({roundsStats : rounds, bullseyeStats : bullseye, missStats : miss });
+        this.setState({ roundsStats: rounds, bullseyeStats: bullseye, missStats: miss, winRate: winRate });
     }
 
     componentDidMount() {
@@ -62,6 +67,7 @@ class Profile extends React.Component {
                 username: this.props.user.username
             }
         }).then((res) => {
+            res.data.games.sort((a, b) => new Date(a.date) - new Date(b.date));
             this.setState({ ...res.data });
             console.log(res.data);
             this.calculateStats();
@@ -89,12 +95,12 @@ class Profile extends React.Component {
     }
 
     render() {
-        const { username, email, games, detailsIndex, roundsStats, bullseyeStats, missStats } = this.state;
+        const { username, email, games, detailsIndex, roundsStats, bullseyeStats, missStats, winRate } = this.state;
         const display = this.state.showDetails ? (
             <div>
-                <DisplayResults game={games[detailsIndex]}  />
-
-                <h3><Link to="/profile">Return</Link></h3>
+                <DisplayResults game={games[detailsIndex]} />
+            
+                <h3><Link to="/profile"><button className="btn btn-default">Return</button></Link></h3>
             </div>
         ) : (
                 <div>
@@ -107,34 +113,35 @@ class Profile extends React.Component {
                     {
                         games.length !== 0 &&
 
-                        <table className="table">
+                        <table className="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th>Number</th>
-                                    <th>Type</th>
-                                    <th>Mode</th>
-                                    <th>Number Of Players</th>
-                                    <th>Winner</th>
-                                    <th>Date</th>
+                                <tr className="danger">
+                                    <th className="text-center">Number</th>
+                                    <th className="text-center">Type</th>
+                                    <th className="text-center">Mode</th>
+                                    <th className="text-center">Number Of Players</th>
+                                    <th className="text-center">Winner</th>
+                                    <th className="text-center">Date</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     games.map((game, index) => {
                                         return (
-                                            <tr key={index}>
-                                                <td>{index}</td>
-                                                <td>{game.gameType}</td>
-                                                <td>{game.mode}</td>
-                                                <td>{game.players.length}</td>
-                                                <td>{game.winner}</td>
-                                                <td>{game.date}</td>
-                                                <td><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
+                                            <tr className="warning" key={index}>
+                                                <td className="text-center">{index + 1}</td>
+                                                <td className="text-center">{game.gameType}</td>
+                                                <td className="text-center">{game.mode}</td>
+                                                <td className="text-center">{game.players.length}</td>
+                                                <td className="text-center">{game.winner}</td>
+                                                <td className="text-center">{game.date}</td>
+                                                <td className="text-center"><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
 
                                             </tr>
                                         );
                                     }
-                                    )
+                                    ).reverse()
                                 }
                             </tbody>
                         </table>
@@ -145,11 +152,11 @@ class Profile extends React.Component {
                     }
                     {
                         games.length !== 0 &&
-                        <table className="table table-bordered">
+                        <table className="table table-bordered black-border">
                             <thead>
-                                <tr>
+                                <tr className="danger">
                                     <td>WinRate:</td>
-                                    <td colSpan="3">Not Yet Implemented</td>
+                                    <td colSpan="3">{Math.round(winRate * 1000) / 1000}</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -163,30 +170,30 @@ class Profile extends React.Component {
                                     roundsStats && roundsStats.count > 0 &&
 
 
-                                        <tr>
-                                            <td>Rounds</td>
-                                            <td>{roundsStats.min}</td>
-                                            <td>{roundsStats.max}</td>
-                                            <td>{Math.round(roundsStats.avg * 1000) / 1000}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>Rounds</td>
+                                        <td>{roundsStats.min}</td>
+                                        <td>{roundsStats.max}</td>
+                                        <td>{Math.round(roundsStats.avg * 1000) / 1000}</td>
+                                    </tr>
                                 }
                                 {
                                     bullseyeStats && roundsStats.count > 0 &&
-                                        <tr>
-                                            <td>Bullseye</td>
-                                            <td>{bullseyeStats.min}</td>
-                                            <td>{bullseyeStats.max}</td>
-                                            <td>{Math.round(bullseyeStats.avg * 1000) / 1000}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>Bullseye</td>
+                                        <td>{bullseyeStats.min}</td>
+                                        <td>{bullseyeStats.max}</td>
+                                        <td>{Math.round(bullseyeStats.avg * 1000) / 1000}</td>
+                                    </tr>
                                 }
                                 {
                                     missStats && roundsStats.count > 0 &&
-                                        <tr>
-                                            <td>Miss</td>
-                                            <td>{missStats.min}</td>
-                                            <td>{missStats.max}</td>
-                                            <td>{Math.round(missStats.avg * 1000) / 1000}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>Miss</td>
+                                        <td>{missStats.min}</td>
+                                        <td>{missStats.max}</td>
+                                        <td>{Math.round(missStats.avg * 1000) / 1000}</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

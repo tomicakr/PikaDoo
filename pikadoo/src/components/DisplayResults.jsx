@@ -7,71 +7,81 @@ class DisplayResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            shots : props.game.shots
+            shots: props.game.shots
         };
 
-        window.onbeforeunload = function(){
+        window.onbeforeunload = function () {
         }
     }
 
     render() {
         return (
-        <div>
-            {/*<div className={`alert alert-success`}>Uspješno spremljeno</div>*/}
-            <table className="table table-bordered">
-                <thead className="dark">
-                    <tr>
-                        <th>Round</th>
-                        <th>Player</th>
-                        <th>Field</th>
-                        <th>Quantifier</th>
-                    </tr>
-                </thead>
+            <div>
+                {/*<div className={`alert alert-success`}>Uspješno spremljeno</div>*/}
+                <table className="table table-bordered">
+                    <thead >
+                        <tr className="danger">
+                            <th className="text-center">Round</th>
+                            <th className="text-center">Player</th>
+                            <th className="text-center">Points</th>
+                            <th className="text-center">Field</th>
+                            <th className="text-center">Quantifier</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {this.state.shots.map((shot, i) => {
-                        const round = Math.floor(i / (3*this.props.game.players.length) + 1);
-                        const field = shot.valid ? shot.points / shot.quantifier : "---";
-                        const rowType = (i % 6 >= 3) ? "info":"sucess";
-                        const player = this.props.game.players[(round - 1) % this.props.game.players.length];
-                        return (
-                            <tr className={rowType} key={i}>
-                                <th>{round}</th>
-                                <th>{player}</th>
-                                <th>{field}</th>
-                                <th>{shot.valid ? shot.quantifier : "---"}</th>
+                    <tbody>
+                        {this.state.shots.map((shot, i) => {
+                            const round = Math.floor(i / (3 * this.props.game.players.length) + 1);
+                            const field = shot.valid ? shot.points / shot.quantifier : "---";
+                            const rowType = (i % 6 >= 3) ? "success" : "warning";
+                            const rowTypeFirst = (i % (6 * this.props.game.players.length) >= (3 * this.props.game.players.length)) ? "success" : "warning";
+                            const player = this.props.game.players[Math.floor((i % (3 * this.props.game.players.length)) / 3)];
+                            return (
+                                <tr key={i}>
+                                    {i % (3 * this.props.game.players.length) == 0 &&
+                                        <td className={rowTypeFirst + " text-center align-middle"} rowSpan={(3 * this.props.game.players.length)}><h2>{round}</h2></td>
+                                    }
+                                    {i % 3 == 0 &&
+                                        <td className={rowType + " text-center align-middle"} rowSpan="3"><h4>{player}</h4></td>
+                                    }
+                                    <td className={rowType + " text-center align-middle"}>{shot.points}</td>
+                                    <td className={rowType + " text-center align-middle"}>{field}</td>
+                                    <td className={rowType + " text-center align-middle"}>{shot.valid ? shot.quantifier : "---"}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+                
+                <hr/>
+
+                <div class="table-responsive">
+
+                    <table className="table table-bordered table-dark">
+                        <thead>
+                            <tr className="danger text-center align-middle" >
+                                <th className="success text-center align-middle">Players: </th>
+                                {this.props.game.players.map((player, i) =>
+                                    <th className="success text-center align-middle" key={i}>{player}</th>
+                                )}
                             </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th className="warning text-center align-middle">Scores: </th>
+                                {this.props.game.scores.map((score, i) =>
+                                    <td className="warning text-center align-middle" key={i}>{score}</td>
+                                )}
+                            </tr>
 
-
-
-            <table className="table table-bordered table-dark">
-                <thead>
-                    <tr>
-                        <th>Players: </th>
-                        {this.props.game.players.map((player, i) =>
-                            <th key={i}>{player}</th>
-                        )}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Scores: </th>
-                        {this.props.game.scores.map((score, i) =>
-                            <td key={i}>{score}</td>
-                        )}
-                    </tr>
-
-                    <tr>
-                        <th>Winner: </th>
-                        <td colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                            <tr >
+                                <th className="success text-center align-middle">Winner: </th>
+                                <td className="success text-center align-middle" colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         );
     }
 }

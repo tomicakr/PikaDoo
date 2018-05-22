@@ -83,7 +83,9 @@ class MultiPlayer extends React.Component {
             );
         } else {
             return (
-                <Game gameType={this.state.gameType} doubleOut={this.state.doubleOut} players={this.state.players} />
+                <div className="container">
+                    <Game gameType={this.state.gameType} doubleOut={this.state.doubleOut} players={this.state.players} />
+                </div>
             );
         }
     }
