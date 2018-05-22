@@ -9,7 +9,7 @@ class NavigationBar extends React.Component {
         const { user, loggedIn } = this.props;
 
         return (
-            <nav className="navbar navbar-static-top navbar-default">
+            <nav className="navbar navbar-static-top navbar-inverse">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <Link className="navbar-brand" to="/">Pikadoo</Link>

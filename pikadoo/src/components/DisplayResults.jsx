@@ -20,7 +20,7 @@ class DisplayResults extends React.Component {
                 {/*<div className={`alert alert-success`}>Uspješno spremljeno</div>*/}
                 <table className="table table-bordered">
                     <thead >
-                        <tr className="danger">
+                        <tr className="active">
                             <th className="text-center">Round</th>
                             <th className="text-center">Player</th>
                             <th className="text-center">Points</th>
@@ -39,14 +39,14 @@ class DisplayResults extends React.Component {
                             return (
                                 <tr key={i}>
                                     {i % (3 * this.props.game.players.length) == 0 &&
-                                        <td className={rowTypeFirst + " text-center align-middle"} rowSpan={(3 * this.props.game.players.length)}><h2>{round}</h2></td>
+                                        <td className={"info" + " text-center align-middle"} rowSpan={(3 * this.props.game.players.length)}><h2>{round}</h2></td>
                                     }
                                     {i % 3 == 0 &&
-                                        <td className={rowType + " text-center align-middle"} rowSpan="3"><h4>{player}</h4></td>
+                                        <td className={"info" + " text-center align-middle"} rowSpan="3"><h4>{player}</h4></td>
                                     }
-                                    <td className={rowType + " text-center align-middle"}>{shot.points}</td>
-                                    <td className={rowType + " text-center align-middle"}>{field}</td>
-                                    <td className={rowType + " text-center align-middle"}>{shot.valid ? shot.quantifier : "---"}</td>
+                                    <td className={"info" + " text-center align-middle"}>{shot.points}</td>
+                                    <td className={"info" + " text-center align-middle"}>{field}</td>
+                                    <td className={"info" + " text-center align-middle"}>{shot.valid ? shot.quantifier : "---"}</td>
                                 </tr>
                             );
                         })}
@@ -57,26 +57,26 @@ class DisplayResults extends React.Component {
 
                 <div class="table-responsive">
 
-                    <table className="table table-bordered table-dark">
+                    <table className="table table-bordered">
                         <thead>
-                            <tr className="danger text-center align-middle" >
-                                <th className="success text-center align-middle">Players: </th>
+                            <tr className="active text-center align-middle" >
+                                <th className="active text-center align-middle">Players: </th>
                                 {this.props.game.players.map((player, i) =>
-                                    <th className="success text-center align-middle" key={i}>{player}</th>
+                                    <th className="active text-center align-middle" key={i}>{player}</th>
                                 )}
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th className="warning text-center align-middle">Scores: </th>
+                                <th className="info text-center align-middle">Scores: </th>
                                 {this.props.game.scores.map((score, i) =>
-                                    <td className="warning text-center align-middle" key={i}>{score}</td>
+                                    <td className="info text-center align-middle" key={i}>{score}</td>
                                 )}
                             </tr>
 
                             <tr >
-                                <th className="success text-center align-middle">Winner: </th>
-                                <td className="success text-center align-middle" colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
+                                <th className="info text-center align-middle">Winner: </th>
+                                <td className="info text-center align-middle" colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
                             </tr>
                         </tbody>
                     </table>

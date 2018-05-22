@@ -52,10 +52,9 @@ class Profile extends React.Component {
             rounds.avg /= rounds.count;
             bullseye.avg /= rounds.count;
             miss.avg /= rounds.count;
-            winRate = wins / rounds.count;
         }
 
-        this.setState({ roundsStats: rounds, bullseyeStats: bullseye, missStats: miss, winRate: winRate });
+        this.setState({ roundsStats: rounds, bullseyeStats: bullseye, missStats: miss, wins: wins });
     }
 
     componentDidMount() {
@@ -95,111 +94,130 @@ class Profile extends React.Component {
     }
 
     render() {
-        const { username, email, games, detailsIndex, roundsStats, bullseyeStats, missStats, winRate } = this.state;
+        const { username, email, games, detailsIndex, roundsStats, bullseyeStats, missStats, wins } = this.state;
         const display = this.state.showDetails ? (
             <div>
                 <DisplayResults game={games[detailsIndex]} />
-            
+
                 <h3><Link to="/profile"><button className="btn btn-default">Return</button></Link></h3>
             </div>
         ) : (
                 <div>
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <div className="jumbotron">
+                                <h1>{username.length > 16 ? username.slice(0, 13)+"..." : username}</h1>
+                                <h2><a href={"mailto:" + email}>{email.length > 16 ? email.slice(0,13)+"..." : email}</a></h2>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            {
+                                games.length !== 0 &&
+                                <table className="table table-bordered black-border">
+                                    <thead>
+                                        <tr className="active">
+                                            <th>Stats</th>
+                                            <th colSpan="3">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="info">
+                                            <td>Games won:</td>
+                                            <td colSpan="3">{wins}</td>
+                                        </tr>
+                                        <tr className="info">
+                                            <td>Games lost:</td>
+                                            <td colSpan="3">{roundsStats && (roundsStats.count - wins)}</td>
+                                        </tr>
+                                        <tr className="info">
+                                            <td>Win Rate:</td>
+                                            <td colSpan="3">{roundsStats && (Math.round((wins / roundsStats.count) * 1000) / 10)}%</td>
+                                        </tr>
+                                        <tr className="active">
+                                            <td></td>
+                                            <th>Min</th>
+                                            <th>Max</th>
+                                            <th>Average</th>
+                                        </tr>
+                                        {
+                                            roundsStats && roundsStats.count > 0 &&
 
-                    <h1>{username}</h1>
-                    <h2><a href={"mailto:" + email}>{email}</a></h2>
 
-                    <br /><br /><br />
-
-                    {
-                        games.length !== 0 &&
-
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr className="danger">
-                                    <th className="text-center">Number</th>
-                                    <th className="text-center">Type</th>
-                                    <th className="text-center">Mode</th>
-                                    <th className="text-center">Number Of Players</th>
-                                    <th className="text-center">Winner</th>
-                                    <th className="text-center">Date</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    games.map((game, index) => {
-                                        return (
-                                            <tr className="warning" key={index}>
-                                                <td className="text-center">{index + 1}</td>
-                                                <td className="text-center">{game.gameType}</td>
-                                                <td className="text-center">{game.mode}</td>
-                                                <td className="text-center">{game.players.length}</td>
-                                                <td className="text-center">{game.winner}</td>
-                                                <td className="text-center">{game.date}</td>
-                                                <td className="text-center"><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
-
+                                            <tr className="info">
+                                                <td>Rounds</td>
+                                                <td>{roundsStats.min}</td>
+                                                <td>{roundsStats.max}</td>
+                                                <td>{Math.round(roundsStats.avg * 1000) / 1000}</td>
                                             </tr>
-                                        );
+                                        }
+                                        {
+                                            bullseyeStats && roundsStats.count > 0 &&
+                                            <tr className="info">
+                                                <td>Bullseye</td>
+                                                <td>{bullseyeStats.min}</td>
+                                                <td>{bullseyeStats.max}</td>
+                                                <td>{Math.round(bullseyeStats.avg * 1000) / 1000}</td>
+                                            </tr>
+                                        }
+                                        {
+                                            missStats && roundsStats.count > 0 &&
+                                            <tr className="info">
+                                                <td>Miss</td>
+                                                <td>{missStats.min}</td>
+                                                <td>{missStats.max}</td>
+                                                <td>{Math.round(missStats.avg * 1000) / 1000}</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            }
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        {
+                            games.length !== 0 &&
+
+                            <table className="table table-bordered">
+                                <thead>
+                                    <tr className="active">
+                                        <th className="text-center">Number</th>
+                                        <th className="text-center">Type</th>
+                                        <th className="text-center">Mode</th>
+                                        <th className="text-center">Number Of Players</th>
+                                        <th className="text-center">Winner</th>
+                                        <th className="text-center">Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        games.map((game, index) => {
+                                            return (
+                                                <tr className="info" key={index}>
+                                                    <td className="text-center">{index + 1}</td>
+                                                    <td className="text-center">{game.gameType}</td>
+                                                    <td className="text-center">{game.mode}</td>
+                                                    <td className="text-center">{game.players.length}</td>
+                                                    <td className="text-center">{game.winner}</td>
+                                                    <td className="text-center">{game.date}</td>
+                                                    <td className="text-center"><button className="btn btn-small" onClick={this.handleShowDetails.bind(this, index)}>Game Details</button></td>
+
+                                                </tr>
+                                            );
+                                        }
+                                        ).reverse()
                                     }
-                                    ).reverse()
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    {
-                        games.length === 0 &&
-                        <p>User hasn't been involved in any games yet.</p>
-                    }
-                    {
-                        games.length !== 0 &&
-                        <table className="table table-bordered black-border">
-                            <thead>
-                                <tr className="danger">
-                                    <td>WinRate:</td>
-                                    <td colSpan="3">{Math.round(winRate * 1000) / 1000}</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Stat</td>
-                                    <td>Min</td>
-                                    <td>Max</td>
-                                    <td>Average</td>
-                                </tr>
-                                {
-                                    roundsStats && roundsStats.count > 0 &&
+                                </tbody>
+                            </table>
+                        }
+                        {
+                            games.length === 0 &&
+                            <p>User hasn't been involved in any games yet.</p>
+                        }
 
-
-                                    <tr>
-                                        <td>Rounds</td>
-                                        <td>{roundsStats.min}</td>
-                                        <td>{roundsStats.max}</td>
-                                        <td>{Math.round(roundsStats.avg * 1000) / 1000}</td>
-                                    </tr>
-                                }
-                                {
-                                    bullseyeStats && roundsStats.count > 0 &&
-                                    <tr>
-                                        <td>Bullseye</td>
-                                        <td>{bullseyeStats.min}</td>
-                                        <td>{bullseyeStats.max}</td>
-                                        <td>{Math.round(bullseyeStats.avg * 1000) / 1000}</td>
-                                    </tr>
-                                }
-                                {
-                                    missStats && roundsStats.count > 0 &&
-                                    <tr>
-                                        <td>Miss</td>
-                                        <td>{missStats.min}</td>
-                                        <td>{missStats.max}</td>
-                                        <td>{Math.round(missStats.avg * 1000) / 1000}</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
-
-                    }
+                    </div>
                 </div>)
         return (
             <div className="container">
