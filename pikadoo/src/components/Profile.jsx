@@ -28,6 +28,7 @@ class Profile extends React.Component {
                 let currBullseyeNumber = 0;
                 let currMissNumber = 0;
                 for (let j = 0; j < shots.length; j++) {
+                    if(shots[j].player !== this.state.username) continue;
                     if (shots[j].points === 25 || shots[j].points === 50) {
                         currBullseyeNumber++;
                     }

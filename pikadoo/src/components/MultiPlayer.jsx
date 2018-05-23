@@ -60,6 +60,17 @@ class MultiPlayer extends React.Component {
                                    onChange={(evt) => this.setState({doubleOut : evt.target.checked})} />
                                <label className="form-check-label" htmlFor="checkbox325">DoubleOut</label>
                             </div>
+                            <hr />
+
+                            <div className="row">
+                                <div className="col-md-2 col-md-offset-5">
+                                    <button type="button" className="btn btn-lg btn-primary"
+                                        onClick={() => this.setState({gameIsRunning : true})}
+                                        disabled={this.state.numOfPlayers < 2}>
+                                        Begin
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="col-md-6">
@@ -96,16 +107,6 @@ class MultiPlayer extends React.Component {
                                 </tbody>
 
                             </table>
-                        </div>
-                    </div>
-                    <hr />
-                    <div className="row">
-                        <div className="col-md-2 col-md-offset-5">
-                            <button type="button" className="btn btn-lg btn-primary"
-                                onClick={() => this.setState({gameIsRunning : true})}
-                                disabled={this.state.numOfPlayers < 2}>
-                                Begin
-                            </button>
                         </div>
                     </div>
                 </div>

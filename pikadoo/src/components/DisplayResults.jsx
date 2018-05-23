@@ -6,8 +6,14 @@ class DisplayResults extends React.Component {
 
     constructor(props) {
         super(props);
+        let shots = props.game.shots;
+        const winner = shots[shots.length - 1].player;
+        while((shots.length % 3) !== 0) {
+            shots.push({valid : false, player : winner});
+        }
         this.state = {
-            shots: props.game.shots
+            shots: props.game.shots,
+            winner
         };
 
         window.onbeforeunload = function () {
@@ -32,30 +38,36 @@ class DisplayResults extends React.Component {
                     <tbody>
                         {this.state.shots.map((shot, i) => {
                             const round = Math.floor(i / (3 * this.props.game.players.length) + 1);
-                            const field = shot.valid ? shot.points / shot.quantifier : "---";
+                            const field = (!shot.valid && !shot.points) ? "---" : shot.points / shot.quantifier;
                             const rowType = (i % 6 >= 3) ? "success" : "warning";
                             const rowTypeFirst = (i % (6 * this.props.game.players.length) >= (3 * this.props.game.players.length)) ? "success" : "warning";
                             const player = this.props.game.players[Math.floor((i % (3 * this.props.game.players.length)) / 3)];
+
+                            const rowSpan = ((this.state.shots.length - i) < (3 * this.props.game.players.length)) ? (
+                                this.state.shots.length - i
+                            ) : (
+                                3 * this.props.game.players.length
+                            );
                             return (
                                 <tr key={i}>
                                     {i % (3 * this.props.game.players.length) == 0 &&
-                                        <td className={"info" + " text-center align-middle"} rowSpan={(3 * this.props.game.players.length)}><h2>{round}</h2></td>
+                                        <td className={"info" + " text-center align-middle"} rowSpan={rowSpan}><h2>{round}</h2></td>
                                     }
                                     {i % 3 == 0 &&
                                         <td className={"info" + " text-center align-middle"} rowSpan="3"><h4>{player}</h4></td>
                                     }
-                                    <td className={"info" + " text-center align-middle"}>{shot.points}</td>
+                                    <td className={"info" + " text-center align-middle"}>{(!shot.valid && !shot.points) ? "---" : shot.points}</td>
                                     <td className={"info" + " text-center align-middle"}>{field}</td>
-                                    <td className={"info" + " text-center align-middle"}>{shot.valid ? shot.quantifier : "---"}</td>
+                                    <td className={"info" + " text-center align-middle"}>{(!shot.valid && !shot.points) ? "---" : shot.quantifier}</td>
                                 </tr>
                             );
                         })}
                     </tbody>
                 </table>
-                
+
                 <hr/>
 
-                <div class="table-responsive">
+                <div className="table-responsive">
 
                     <table className="table table-bordered">
                         <thead>
@@ -76,7 +88,7 @@ class DisplayResults extends React.Component {
 
                             <tr >
                                 <th className="info text-center align-middle">Winner: </th>
-                                <td className="info text-center align-middle" colSpan={this.props.game.players.length}>{this.state.shots[this.state.shots.length - 1].player}</td>
+                                <td className="info text-center align-middle" colSpan={this.props.game.players.length}>{this.state.winner}</td>
                             </tr>
                         </tbody>
                     </table>

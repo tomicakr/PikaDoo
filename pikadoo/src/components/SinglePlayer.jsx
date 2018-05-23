@@ -28,7 +28,7 @@ class SinglePlayer extends React.Component {
 
                     <div className="row">
                         <div className="col-md-6">
-                            <div class="form-group">
+                            <div className="form-group">
                                 <h2><label htmlFor="selectGameType">Select game type:</label></h2>
                                 <select className="form-control" value={this.state.gameType} onChange={this.handleChange} id="selectGameType">
                                         <option value="301">301</option>
@@ -43,17 +43,20 @@ class SinglePlayer extends React.Component {
                                 <label className="form-check-label" htmlFor="checkbox325">DoubleOut</label>
                             </div>
 
+                            <hr />
+                            <div className="row">
+                                <div className="col-md-2 col-md-offset-5">
+                                    <button type="button" className="btn btn-lg btn-primary"
+                                        onClick={() => this.setState({gameIsRunning : true})}
+                                        disabled={this.state.numOfPlayers < 2}>
+                                        Begin
+                                    </button>
+                                </div>
+                            </div>
+
+
                         </div>
-                    </div>
-                    <hr />
-                    <div className="row">
-                        <div className="col-md-2 col-md-offset-5">
-                            <button type="button" className="btn btn-lg btn-primary"
-                                onClick={() => this.setState({gameIsRunning : true})}
-                                disabled={this.state.numOfPlayers < 2}>
-                                Begin
-                            </button>
-                        </div>
+
                     </div>
 
                 </div>

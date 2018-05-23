@@ -81,16 +81,28 @@ class Board extends React.Component {
             </svg>
 
                 <br /><br/>
-                <div className="btn-group">
-                  <button type="button" className={this.state.quantifier===1 ? "btn btn-default active" : "btn btn-default"}
-                    onClick={() => this.setState({quantifier : 1})}>Single</button>
-                  <button type="button" className={this.state.quantifier===2 ? "btn btn-default active" : "btn btn-default"}
-                    onClick={() => this.setState({quantifier : 2})}>Double</button>
-                  <button type="button" className={this.state.quantifier===3 ? "btn btn-default active" : "btn btn-default"}
-                    onClick={() => this.setState({quantifier : 3})}
-                    disabled={this.state.selectedField == 25}>Triple</button>
+
+                <div className="row">
+
+                <div className="col-md-6">
+                    <div className="btn-group">
+                      <button type="button" className={this.state.quantifier===1 ? "btn btn-default active" : "btn btn-default"}
+                        onClick={() => this.setState({quantifier : 1})}>Single</button>
+                      <button type="button" className={this.state.quantifier===2 ? "btn btn-default active" : "btn btn-default"}
+                        onClick={() => this.setState({quantifier : 2})}>Double</button>
+                      <button type="button" className={this.state.quantifier===3 ? "btn btn-default active" : "btn btn-default"}
+                        onClick={() => this.setState({quantifier : 3})}
+                        disabled={this.state.selectedField == 25}>Triple</button>
+                    </div>
                 </div>
-                <p>SELECTED: {selected}</p>
+                <div className="col-md-6">
+                    <div className="jumbotron" id="selectedID">
+                        {selected}
+                    </div>
+                </div>
+
+                </div>
+
                 <button type="button" className="btn btn-primary" onClick={() => {
                     this.props.onSelectPoints({points : selected, quantifier : this.state.quantifier});
                     this.setState({selectedField : null, quantifier : 1});
