@@ -25,27 +25,37 @@ class SinglePlayer extends React.Component {
         if (!this.state.gameIsRunning) {
             return (
                 <div className='container'>
-                    <div>
-                        <h1>Select game type:
-                        <select value={this.state.gameType} onChange={this.handleChange}>
-                                <option value="301">301</option>
-                                <option value="501">501</option>
-                                <option value="701">701</option>
-                        </select>
-                        </h1>
 
-                        <div className="form-check">
-                            <input type="checkbox" className="filled-in form-check-input" id="checkbox325"
-                                onChange={(evt) => this.setState({ doubleOut: evt.target.checked })} />
-                            <label className="form-check-label" htmlFor="checkbox325">DoubleOut</label>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div class="form-group">
+                                <h2><label htmlFor="selectGameType">Select game type:</label></h2>
+                                <select className="form-control" value={this.state.gameType} onChange={this.handleChange} id="selectGameType">
+                                        <option value="301">301</option>
+                                        <option value="501">501</option>
+                                        <option value="701">701</option>
+                                </select>
+                            </div>
+
+                            <div className="form-check">
+                                <input type="checkbox" className="filled-in form-check-input" id="checkbox325"
+                                    onChange={(evt) => this.setState({ doubleOut: evt.target.checked })} />
+                                <label className="form-check-label" htmlFor="checkbox325">DoubleOut</label>
+                            </div>
+
                         </div>
-
-                        <button type="button" className="btn btn-primary"
-                            onClick={() => this.setState({ gameIsRunning: true })}
-                            disabled={this.state.gameType == null}>
-                            Begin
-                        </button>
                     </div>
+                    <hr />
+                    <div className="row">
+                        <div className="col-md-2 col-md-offset-5">
+                            <button type="button" className="btn btn-lg btn-primary"
+                                onClick={() => this.setState({gameIsRunning : true})}
+                                disabled={this.state.numOfPlayers < 2}>
+                                Begin
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             );
         } else {

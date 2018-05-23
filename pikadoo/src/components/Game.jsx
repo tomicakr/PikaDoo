@@ -121,12 +121,22 @@ class Game extends React.Component {
             </div>
         ) : (
                 <div className="container">
-                    <p>Game: {this.state.gameType}</p>
-                    <p>Player: {this.props.players[this.state.currPlayerIndex]}</p>
-                    <p>Score: {this.state.scores[this.state.currPlayerIndex]}</p>
+
+                    <Prompt message="Game is in progress. Are you sure you want to leave?" />
+
+                    <div className="row">
+                        <div className="jumbotron jumbotron-fluid col-md-4 col-md-offset-4 text-center"
+                            colSpan={this.props.players.length + 1}
+                            
+                            id="gameTypeID">
+                            <h2>Game type: {this.state.gameType}</h2>
+                        </div>
+                    </div>
 
                     <table className="table table-bordered">
                         <thead>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <th>Players:</th>
                                 {this.props.players.map((player, index) => {
@@ -136,8 +146,7 @@ class Game extends React.Component {
                                     );
                                 })}
                             </tr>
-                        </thead>
-                        <tbody>
+
                             <tr>
                                 <th>Scores:</th>
 
@@ -151,48 +160,55 @@ class Game extends React.Component {
                         </tbody>
                     </table>
 
-                    <Board onSelectPoints={this.handleSelectedPoints.bind(this)} />
-                    <Prompt message="Game is in progress. Are you sure you want to leave?" />
 
-                    <h3>Rounds</h3>
-                    <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Number</th>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>Player</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.rounds.map((round, index) => {
-                                let throw0 = round[0].points === 0 ? "miss" : (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
-                                let throw1 = round[1].points === 0 ? "miss" : (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
-                                let throw2 = round[2].points === 0 ? "miss" : (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
-                                console.log(round);
-                                if(!round[0].valid) {
-                                    throw0 = "Busted " + (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
-                                    throw1 = "---";
-                                    throw2 = "---";
-                                }
-                                else if(!round[1].valid) {
-                                    throw1 = "Busted " + (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
-                                    throw2 = "---";
-                                }
-                                else if(!round[2].valid) throw2 = "Busted " + (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
-                                return (
-                                    <tr key={index}>
-                                        <td>{Math.floor(index / this.props.players.length + 1)}</td>
-                                        <td> {throw0} </td>
-                                        <td> {throw1} </td>
-                                        <td> {throw2} </td>
-                                        <td> {round[0].player} </td>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <Board onSelectPoints={this.handleSelectedPoints.bind(this)} />
+                        </div>
+
+                        <div className="col-md-6">
+                            <h3>Rounds</h3>
+                            <table className="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>Player</th>
                                     </tr>
-                                );
-                            }).reverse()}
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    {this.state.rounds.map((round, index) => {
+                                        let throw0 = round[0].points === 0 ? "miss" : (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
+                                        let throw1 = round[1].points === 0 ? "miss" : (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
+                                        let throw2 = round[2].points === 0 ? "miss" : (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
+                                        console.log(round);
+                                        if(!round[0].valid) {
+                                            throw0 = "Busted " + (round[0].quantifier == "-" ? "-" : round[0].points / round[0].quantifier + " X " + round[0].quantifier);
+                                            throw1 = "---";
+                                            throw2 = "---";
+                                        }
+                                        else if(!round[1].valid) {
+                                            throw1 = "Busted " + (round[1].quantifier == "-" ? "-" : round[1].points / round[1].quantifier + " X " + round[1].quantifier);
+                                            throw2 = "---";
+                                        }
+                                        else if(!round[2].valid) throw2 = "Busted " + (round[2].quantifier == "-" ? "-" : round[2].points / round[2].quantifier + " X " + round[2].quantifier);
+                                        return (
+                                            <tr key={index}>
+                                                <td>{Math.floor(index / this.props.players.length + 1)}</td>
+                                                <td> {throw0} </td>
+                                                <td> {throw1} </td>
+                                                <td> {throw2} </td>
+                                                <td> {round[0].player} </td>
+                                            </tr>
+                                        );
+                                    }).reverse()}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
             );
         return (

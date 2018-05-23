@@ -74,13 +74,13 @@ class Board extends React.Component {
                 );
            }
         return (
-            <div className='container-fluid'>
+            <div className='container-fluid text-center' >
             <svg height="325" width="325" transform="scale(1, 1)">
                 <image href={require('../../res/papikado.png')} height="325" width="325" onClick={this.onClick.bind(this)}/>
                 {drawSelectedField}
             </svg>
 
-                <br />
+                <br /><br/>
                 <div className="btn-group">
                   <button type="button" className={this.state.quantifier===1 ? "btn btn-default active" : "btn btn-default"}
                     onClick={() => this.setState({quantifier : 1})}>Single</button>

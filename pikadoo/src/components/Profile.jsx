@@ -103,14 +103,14 @@ class Profile extends React.Component {
             </div>
         ) : (
                 <div>
-                    <div class="row">
-                        <div class="col-md-6 text-center">
+                    <div className="row">
+                        <div className="col-md-6 text-center">
                             <div className="jumbotron">
                                 <h1>{username.length > 16 ? username.slice(0, 13)+"..." : username}</h1>
                                 <h2><a href={"mailto:" + email}>{email.length > 16 ? email.slice(0,13)+"..." : email}</a></h2>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                             {
                                 games.length !== 0 &&
                                 <table className="table table-bordered black-border">
