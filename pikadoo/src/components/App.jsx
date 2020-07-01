@@ -1,18 +1,20 @@
 import React, { PureComponent } from 'react';
 
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { LoginPage } from './LoginPage';
 import { RegisterPage } from './RegisterPage';
-import { PrivateRoute } from './PrivateRoute'
+//import { PrivateRoute } from './PrivateRoute'
 
 import Favicon from 'react-favicon';
 import { NavigationBar } from './NavigationBar';
 import SinglePlayer from './SinglePlayer';
 import MultiPlayer from './MultiPlayer';
+import {HomePage} from './HomePage';
+import Profile from './Profile';
 
 
 class App extends React.Component {
@@ -28,7 +30,13 @@ class App extends React.Component {
 
     render() {
         const { alert } = this.props;
-
+        const PrivateRoute = ({ component: Component, ...rest }) => (
+                  <Route {...rest} render={(props) => (
+                    this.props.loggedIn
+                      ? <Component {...props} />
+                      : <Redirect to={{ pathname: '/login', state: { from: props.location } }}/>
+                  )} />
+        );
         return (
             <Router history={history}>
                 <div>
@@ -38,10 +46,12 @@ class App extends React.Component {
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
+                        <Route exact path="/" component={HomePage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/register" component={RegisterPage} />
                         <PrivateRoute exact path="/singleplayer" component={SinglePlayer} />
                         <PrivateRoute exact path="/multiplayer" component={MultiPlayer} />
+                        <PrivateRoute exact path="/profile" component={Profile} />
                     </div>
                 </div>
             </Router>
@@ -50,9 +60,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { alert } = state;
+    const { alert, authentication } = state;
+    const { loggedIn } = authentication;
     return {
-        alert
+        alert,
+        loggedIn
     };
 }
 

@@ -1,0 +1,51 @@
+
+profil gdje je statistika: username, email
+                            popis igara -> single i multi,
+                            single:    prikaz je datum, na klik popis rundi,
+                            multi: isto datum, ko je pobijedio i npr u koliko rundi, na klik popis rundi
+
+                globalna statistika: koliko igra odigrano, koliko pobjeda, prosjek izlazaka
+
+prijelaz iz DisplayResults u novu igru ili bilo sta drugo vani
+
+style, izgled - SVEE AAAAA
+
+
+----------------------------- WORKSPACE -----------------------
+
+this.state = {
+            game : props.game,
+            doubleOut : props.doubleOut,
+            scores : myScores,
+            currPlayerIndex : 0,
+            win : false,
+            shots : [],
+            roundStartScore : 0
+        }
+
+this.state = {
+    game : props.game,
+    doubleOut : props.doubleOut,
+    scores : myScores,
+    currPlayerIndex : 0,
+    win : false,
+    rounds : [],
+    roundStartScore : 0
+}
+
+BAZA MORA ZNAT ŠTA??
+game : { winner -> zadnji shot->player, scores, game, doubleOut, players,  }
+
+rounds : [player:"", busted : true/false, shots:[], possibleOut : true/false]
+
+
+Globalne stats:
+    
+    winrate | m
+
+
+    3 X 20: min, max, avg | sm
+
+
+
+----------------------------- /WORKSPACE -----------------------

@@ -20,8 +20,10 @@ app.use(publicPath);
 
 
 
-app.use(require('./register'));
-app.use(require('./login'));
+app.use('/register', require('./register'));
+app.use('/login', require('./login'));
+app.use('/game', require('./game'));
+app.use('/profileGet', require('./profile'));
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));
 });

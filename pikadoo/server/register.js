@@ -7,11 +7,17 @@ router.use(require('express-validator')());
 
 var db = mongojs('pikadoo', ['users']);
 
-router.post('/register', (req, res) => {
+router.post('/', (req, res) => {
     const user = req.body.user;
     req.checkBody('user.email', 'Invalid email').isEmail();
     req.checkBody('user.username', 'Username cannot be empty').notEmpty();
+    req.checkBody('user.username', 'Username cannot be that long').custom(value => {
+        return value.length <= 16;
+    });
     req.checkBody('user.password', 'Password cannot be empty').notEmpty();
+    req.checkBody('user.password', 'Password needs to be at least five characters long').custom(value => {
+        return value.length >= 5;
+    });
     req.checkBody('user.passwordC', 'Passwords do not match').equals(user.password);
 
     let errors = req.validationErrors();
@@ -31,7 +37,6 @@ router.post('/register', (req, res) => {
             console.log(err);
         } 
 
-        console.log(doc);
         if(doc){
             res.json({errorsExist: true, error: {msg: "Korisnik već postoji"}});
             

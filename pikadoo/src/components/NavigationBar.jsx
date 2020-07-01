@@ -9,16 +9,16 @@ class NavigationBar extends React.Component {
         const { user, loggedIn } = this.props;
 
         return (
-            <nav className="navbar fixed-top navbar-inverse bg-dark">
+            <nav className="navbar navbar-static-top navbar-inverse">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="/">Pikadoo</a>
+                        <Link className="navbar-brand" to="/">Pikadoo</Link>
                     </div>
                     {
                         loggedIn &&
                         <div>
                             <ul className="nav navbar-nav">
-                                <li><a href="/singleplayer"><span className="text-white">Single-player</span></a></li>
+                                <li><Link to="/singleplayer"><span className="text-white">Single-player</span></Link></li>
                             </ul>
                             <ul className="nav navbar-nav">
                                 <li><Link to="/multiplayer"><span className="text-white">Multi-player</span></Link></li>
@@ -27,7 +27,7 @@ class NavigationBar extends React.Component {
                                 <li><Link to="/login"><span className="glyphicon glyphicon-log-out" href="/login"></span> Logout</Link></li>
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
-                                <li><a href="/profile"><span className="text-white">Hello, {user.username}!</span></a></li>
+                                <li><Link to="/profile"><span className="text-white">Hello, {user.username}!</span></Link></li>
                             </ul>
                         </div>
                     }

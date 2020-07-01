@@ -1,16 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Pikadoo</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <style>
-        a { cursor: pointer; }
-        .help-block { font-size: 12px; }
+        .centered {
+            position: fixed;
+            /* or absolute */
+            top: 50%;
+            left: 50%;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        .help-block {
+            font-size: 12px;
+        }
+
+        a,
+        a:focus,
+        a:hover {
+            color: #fff;
+        }
+
+        .btn-default,
+        .btn-default:hover,
+            {
+            color: rgb(15, 7, 7);
+            text-shadow: none;
+            /* Prevent inheritance from `body` */
+            background-color: rgb(189, 82, 82);
+            border: 1px solid #fff;
+        }
+
+        #gameTypeID {
+            padding: 2px;
+        }
+
+        #selectedID {
+            padding: 6px;
+        }
+
+        .btn-default:focus {
+            color: rgb(15, 7, 7);
+            text-shadow: none;
+            /* Prevent inheritance from `body` */
+            background-color: rgb(143, 4, 4);
+            border: 1px solid #fff;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: rgb(219, 231, 245);
+        }
+
+        body {
+            color: rgb(39, 7, 7);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+        }
+
+        .site-wrapper {
+            text-align: center;
+            display: table;
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+        }
+
+        .site-wrapper-inner {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .cover-container {
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .inner {
+            padding: 30px;
+        }
+
+        .masthead-brand {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .masthead-nav>li {
+            display: inline-block;
+        }
+
+        .masthead-nav>li+li {
+            margin-left: 20px;
+        }
+
+        .masthead-nav>li>a {
+            padding-right: 0;
+            padding-left: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            color: rgba(255, 255, 255, .75);
+            border-bottom: 2px solid transparent;
+        }
+
+        .masthead-nav>li>a:hover,
+        .masthead-nav>li>a:focus {
+            background-color: transparent;
+            border-bottom-color: #a9a9a9;
+            border-bottom-color: rgba(255, 255, 255, .25);
+        }
+
+        .masthead-nav>.active>a,
+        .masthead-nav>.active>a:hover,
+        .masthead-nav>.active>a:focus {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            .masthead-brand {
+                float: left;
+            }
+            .masthead-nav {
+                float: right;
+            }
+        }
+
+        .cover {
+            padding: 0 20px;
+        }
+
+        .cover .btn-lg {
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+        .mastfoot {
+            color: #999;
+            color: rgba(255, 255, 255, .5);
+        }
+
+        .align-middle {
+            vertical-align: middle !important;
+        }
+
+        .table {
+            border: 5px solid  cadetblue;
+        }
+
+        .jumbotron {
+            background: cadetblue;
+        }
+
+        @media (min-width: 768px) {
+            .masthead {
+                position: fixed;
+                top: 0;
+            }
+            .mastfoot {
+                position: fixed;
+                bottom: 0;
+            }
+            .site-wrapper-inner {
+                vertical-align: middle;
+            }
+            .masthead,
+            .mastfoot,
+            .cover-container {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .masthead,
+            .mastfoot,
+            .cover-container {
+                width: 700px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div id="app"></div>
-    <script src="bundle.js" />
+    <script src="bundle.js"></script>
 </body>
+
 </html>
